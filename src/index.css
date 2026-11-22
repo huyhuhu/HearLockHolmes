@@ -2,11 +2,11 @@
 
 /* ---- Design tokens: noir đêm (mặc định) ---- */
 @theme {
-  /* Display dùng IBM Plex Mono — typewriter slab, ĐỦ DẤU tiếng Việt.
-     Special Elite không có subset vietnamese → chỉ dùng cho logo/tiêu đề brand (tiếng Anh). */
-  --font-display: "IBM Plex Mono", "Courier New", monospace;
+  /* Be Vietnam Pro: font thiết kế riêng cho dấu tiếng Việt — dấu chồng thẳng hàng.
+     Special Elite (typewriter) KHÔNG có subset vietnamese → chỉ cho logo/nhãn brand tiếng Anh. */
+  --font-display: "Be Vietnam Pro", system-ui, sans-serif;
   --font-brand: "Special Elite", "Courier New", monospace;
-  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-sans: "Be Vietnam Pro", system-ui, sans-serif;
 
   --color-void: #090c12;
   --color-ink: #0f131c;
@@ -49,7 +49,7 @@ body {
   background-color: var(--color-void);
 }
 
-/* Font brand (Special Elite) chỉ có weight 400; display mono lên 500 cho dễ đọc */
+/* Brand (Special Elite) chỉ có weight 400; display dùng 600 cho rõ, body 500 */
 .font-brand {
   font-weight: 400;
 }
@@ -57,7 +57,29 @@ body {
 .font-display,
 .btn-amber,
 .btn-ghost {
-  font-weight: 500;
+  font-weight: 600;
+}
+
+/* Hiệu ứng chuyển trang — fade + trượt nhẹ, an toàn trên Android WebView */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 220ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
 }
 
 /* Film grain — "every frame is evidence" */

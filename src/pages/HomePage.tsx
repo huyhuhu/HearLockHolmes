@@ -9,7 +9,7 @@ export function HomePage() {
       <section className="relative py-16 md:py-24">
         <div className="absolute inset-x-0 top-0 -z-10 h-72 bg-[radial-gradient(ellipse_at_50%_0%,color-mix(in_srgb,var(--color-amber)_16%,transparent),transparent_70%)]" />
 
-        <p className="font-display text-xs tracking-[0.45em] text-[var(--color-smoke)]">
+        <p className="font-brand text-xs tracking-[0.45em] text-[var(--color-smoke)]">
           221B NOIR STREET — LISTENING DIVISION
         </p>
 
@@ -34,7 +34,7 @@ export function HomePage() {
       <section className="mt-6">
         <div className="flex items-center gap-3">
           <div className="h-px flex-1 bg-[color-mix(in_srgb,var(--color-chalk)_14%,transparent)]" />
-          <h2 className="font-display text-sm tracking-[0.3em] text-[var(--color-amber)]">
+          <h2 className="font-brand text-sm tracking-[0.3em] text-[var(--color-amber)]">
             CASE BOARD
           </h2>
           <div className="h-px flex-1 bg-[color-mix(in_srgb,var(--color-chalk)_14%,transparent)]" />
@@ -44,7 +44,7 @@ export function HomePage() {
           {[0, 1, 2].map((i) => (
             <div key={i} className="polaroid mx-auto w-full max-w-xs p-4 pb-8">
               <div className="flex h-40 items-center justify-center border border-dashed border-black/25 bg-black/5">
-                <span className="font-display text-xs tracking-[0.2em] text-black/45">
+                <span className="font-brand text-xs tracking-[0.2em] text-black/45">
                   EVIDENCE {String(i + 1).padStart(2, "0")}
                 </span>
               </div>

@@ -9,7 +9,7 @@ export function LoginPage() {
 
   return (
     <main className="mx-auto flex max-w-lg flex-col items-center px-4 py-24 text-center">
-      <p className="font-display text-xs tracking-[0.4em] text-[var(--color-smoke)]">
+      <p className="font-brand text-xs tracking-[0.4em] text-[var(--color-smoke)]">
         AUTHORIZATION REQUIRED
       </p>
       <h1 className="neon-text mt-4 font-display text-4xl tracking-wide">

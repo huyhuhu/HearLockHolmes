@@ -64,7 +64,7 @@ Nguồn dữ liệu: số lần replay, tua lại, chọn sai dạng sạch, t�
 
 Film noir hiện đại: nền **đen/chàm tối**, đèn **hổ phách** hoặc **đỏ neon le lói**, mưa + **film grain**, font **máy chữ** (Special Elite) cho hồ sơ vụ án, ảnh **polaroid** ghim manh mối lên bảng điều tra, **waveform animated** là bằng chứng sống của UI. Logo stylize kiểu **neon sign / biển văn phòng thám tử**.
 
-- Font: **IBM Plex Mono** (display/typewriter — đủ dấu tiếng Việt) + **IBM Plex Sans** (UI body) + **Special Elite** *chỉ* cho logo/tiêu đề brand tiếng Anh (font này không có subset vietnamese).
+- Font: **Be Vietnam Pro** (UI + display — dấu tiếng Việt thẳng hàng, thiết kế riêng cho VN) + **Special Elite** *chỉ* cho logo/nhãn brand tiếng Anh (typewriter, không có subset vietnamese — cấm dùng cho chữ Việt).
 - **Cấm**: gradient tím, hero 3 cột, font Inter, "mặc định AI", bảng thành tích rực rỡ.
 - "Sống động" = nhịp game lôi cuốn, không phải trang trí ồn ào.
 
@@ -72,6 +72,7 @@ Film noir hiện đại: nền **đen/chàm tối**, đèn **hổ phách** hoặ
 
 Người học dùng **điện thoại và tablet** hằng ngày — mọi màn hình phải dùng được ở **viewport 375px**:
 
+- **Môi trường đích: trình duyệt Via trên Android (Android WebView)** — tránh API mới chưa có trong WebView; ưu tiên CSS transforms/transitions, touch target ≥ 40px, không hover-only, không autoplay âm thanh. Kiểm tra thêm Chrome Android + desktop Firefox.
 - Top bar: 2 hàng trên phone (logo + toggle ở hàng trên, nav hàng dưới); touch target **≥ 40px**.
 - Micro-loop: nút điều khiển băng (play/pause, A–B, tốc độ, replay) xếp vừa **ngón cái** — không hover-only; bảng chọn "dạng sạch" và MCQ **full-width** trên phone.
 - Transcript (mổ xẻ): cụm highlight đủ lớn để tap; không cuộn ngang.
