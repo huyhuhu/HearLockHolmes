@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* ---- Design tokens: noir đêm (mặc định) ---- */
+@theme {
+  /* Display dùng IBM Plex Mono — typewriter slab, ĐỦ DẤU tiếng Việt.
+     Special Elite không có subset vietnamese → chỉ dùng cho logo/tiêu đề brand (tiếng Anh). */
+  --font-display: "IBM Plex Mono", "Courier New", monospace;
+  --font-brand: "Special Elite", "Courier New", monospace;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+
+  --color-void: #090c12;
+  --color-ink: #0f131c;
+  --color-ink-2: #161c29;
+  --color-ink-3: #212a3c;
+  --color-smoke: #a9b1c1;
+  --color-chalk: #efeaDD;
+  --color-amber: #f0b429;
+  --color-amber-deep: #c98a12;
+  --color-neon: #e63946;
+  --color-neon-soft: #ff6b6b;
+  --color-paper: #f2e9d4;
+}
+
+/* Light = "ban ngày tại văn phòng": giấy ngả vàng, mực đen, đèn bàn hổ phách nhạt */
+[data-theme="light"] {
+  --color-void: #e8dcc0;
+  --color-ink: #f4ecda;
+  --color-ink-2: #ead9b6;
+  --color-ink-3: #d9c394;
+  --color-smoke: #57472a;
+  --color-chalk: #241e11;
+  --color-amber: #9c6a08;
+  --color-amber-deep: #7a5206;
+  --color-neon: #b3202c;
+  --color-neon-soft: #c1121f;
+  --color-paper: #faf4e4;
+}
+
+html {
+  background-color: var(--color-void);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--color-chalk);
+  background-color: var(--color-void);
+}
+
+/* Font brand (Special Elite) chỉ có weight 400; display mono lên 500 cho dễ đọc */
+.font-brand {
+  font-weight: 400;
+}
+
+.font-display,
+.btn-amber,
+.btn-ghost {
+  font-weight: 500;
+}
+
+/* Film grain — "every frame is evidence" */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Vignette như ống kính máy ảnh cũ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 52%, rgba(0, 0, 0, 0.38) 100%);
+}
+
+[data-theme="light"] body::after {
+  background: radial-gradient(ellipse at center, transparent 58%, rgba(80, 58, 20, 0.18) 100%);
+}
+
+::selection {
+  background: var(--color-amber);
+  color: var(--color-void);
+}
+
+/* Neon sign cho logo */
+.neon-text {
+  color: var(--color-amber);
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--color-amber) 70%, transparent),
+    0 0 22px color-mix(in srgb, var(--color-amber) 45%, transparent),
+    0 0 44px color-mix(in srgb, var(--color-amber) 22%, transparent);
+}
+
+.neon-text-red {
+  color: var(--color-neon-soft);
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--color-neon) 70%, transparent),
+    0 0 22px color-mix(in srgb, var(--color-neon) 45%, transparent);
+}
+
+/* Polaroid ghim manh mối */
+.polaroid {
+  background: var(--color-paper);
+  color: #2b2416;
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  transform: rotate(-1.2deg);
+}
+
+.polaroid:nth-child(even) {
+  transform: rotate(1.4deg);
+}
+
+/* Nút kiểu công tắc phòng thí nghiệm */
+.btn-amber {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  background: var(--color-amber);
+  color: var(--color-void);
+  border: 1px solid color-mix(in srgb, var(--color-amber) 70%, black);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--color-amber) 35%, transparent);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.btn-amber:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 26px color-mix(in srgb, var(--color-amber) 55%, transparent);
+}
+
+.btn-ghost {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  background: transparent;
+  color: var(--color-chalk);
+  border: 1px solid color-mix(in srgb, var(--color-chalk) 28%, transparent);
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-amber);
+  color: var(--color-amber);
+}
