@@ -76,7 +76,27 @@ body {
   animation: page-enter 220ms ease-out both;
 }
 
+/* Sống động = nhịp game lôi cuốn, không phải trang trí ồn ào.
+   Thanh băng đã phát nhấp nháy nhẹ theo nhịp — "bằng chứng sống". */
+@keyframes wave-pulse {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.72);
+  }
+}
+
+.animate-wave {
+  transform-origin: bottom;
+  animation: wave-pulse 620ms ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .animate-wave {
+    animation: none;
+  }
   .page-enter {
     animation: none;
   }
