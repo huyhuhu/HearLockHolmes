@@ -96,11 +96,24 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-wave {
-    animation: none;
+  .animate-wave,
+  .page-enter,
+  .anim-fade-up,
+  .anim-fade-in,
+  .anim-pop,
+  .anim-stamp,
+  .anim-shake,
+  .anim-toast,
+  .anim-bubble,
+  .anim-wren,
+  .anim-wren-eye,
+  .anim-spin-slow,
+  .anim-pulse-soft,
+  .anim-glow {
+    animation: none !important;
   }
-  .page-enter {
-    animation: none;
+  .anim-bar {
+    transition: none;
   }
 }
 
@@ -191,4 +204,240 @@ body::after {
 .btn-ghost:hover {
   border-color: var(--color-amber);
   color: var(--color-amber);
+}
+
+/* ——— Hệ thống hiệu ứng GĐ5: mọi trang / tab / popup đều animate ——— */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.86) translateY(8px);
+  }
+  70% {
+    transform: scale(1.03) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.7) rotate(-14deg);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(0.94) rotate(-3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-2.5deg);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes bubble-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes wren-idle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+}
+
+@keyframes wren-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.12);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 18px color-mix(in srgb, var(--color-amber) 30%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 34px color-mix(in srgb, var(--color-amber) 55%, transparent);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.anim-fade-up {
+  animation: fade-up 380ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.anim-fade-in {
+  animation: fade-in 320ms ease-out backwards;
+}
+.anim-pop {
+  animation: pop-in 340ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.anim-stamp {
+  animation: stamp-in 520ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.anim-shake {
+  animation: shake 380ms ease-in-out;
+}
+.anim-toast {
+  animation: toast-in 320ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.anim-bubble {
+  animation: bubble-in 300ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.anim-glow {
+  animation: glow-pulse 2.4s ease-in-out infinite;
+}
+.anim-spin-slow {
+  animation: spin-slow 9s linear infinite;
+}
+
+.anim-wren {
+  transform-origin: 50% 80%;
+  animation: wren-idle 3.6s ease-in-out infinite;
+}
+.anim-wren-eye {
+  transform-origin: center;
+  animation: wren-blink 5.2s ease-in-out infinite;
+}
+
+/* Stagger entrance — dùng cho list/card/tab */
+.stagger > * {
+  animation: fade-up 420ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.stagger > *:nth-child(1) { animation-delay: 40ms; }
+.stagger > *:nth-child(2) { animation-delay: 110ms; }
+.stagger > *:nth-child(3) { animation-delay: 180ms; }
+.stagger > *:nth-child(4) { animation-delay: 250ms; }
+.stagger > *:nth-child(5) { animation-delay: 320ms; }
+.stagger > *:nth-child(6) { animation-delay: 390ms; }
+.stagger > *:nth-child(7) { animation-delay: 460ms; }
+.stagger > *:nth-child(8) { animation-delay: 530ms; }
+.stagger > *:nth-child(n + 9) { animation-delay: 600ms; }
+
+/* Thanh XP / tiến độ — mượt khi đổi giá trị */
+.anim-bar {
+  transition: width 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Nút: nhấn rõ tay (touch feedback) */
+.btn-amber:active,
+.btn-ghost:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Overlay popup: backdrop + panel */
+.anim-overlay {
+  animation: fade-in 240ms ease-out backwards;
+}
+.anim-panel {
+  animation: pop-in 380ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Khóa / trạng thái cấm */
+.polaroid.locked {
+  filter: grayscale(0.55) brightness(0.85);
+}
+
+/* Tab rail — indicator trượt */
+.tab-rail {
+  position: relative;
+}
+.tab-rail .tab-indicator {
+  position: absolute;
+  bottom: -1px;
+  height: 2px;
+  background: var(--color-amber);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-amber) 60%, transparent);
+  transition:
+    left 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Manh mối ghim lên bảng điều tra */
+.clue-pin {
+  position: relative;
+}
+.clue-pin::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--color-neon-soft);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  transform: translateX(-50%);
 }
