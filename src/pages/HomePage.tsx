@@ -26,7 +26,7 @@ export function HomePage() {
             <p className="font-brand text-xs tracking-[0.45em] text-[var(--color-smoke)]">
               221B NOIR STREET — LISTENING DIVISION
             </p>
-            <h1 className="neon-text mt-4 font-brand text-4xl leading-tight tracking-wide md:text-6xl">
+            <h1 className={`neon-text mt-4 text-4xl leading-tight tracking-wide md:text-6xl ${detective ? "font-brand-i18n" : "font-brand"}`}>
               {detective
                 ? t("home.hello", { name: detective.name })
                 : t("home.headline")}
@@ -75,7 +75,7 @@ export function HomePage() {
               )}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="font-brand text-[10px] tracking-[0.3em] text-[var(--color-amber)]">
+              <p className="font-brand-i18n text-[10px] tracking-[0.3em] text-[var(--color-amber)]">
                 {t("home.rankChip", { rank: t(`rank.${rank}` as never) })}
               </p>
               <p className="mt-1 truncate font-display text-lg text-[var(--color-chalk)]">

@@ -86,18 +86,19 @@ Các bước:
 **Done khi:** tạo được thám tử, thấy rank/XP/level tăng bởi hành vi học thật, phá 1 vụ nhỏ + 1 boss, nhiệm vụ ngày chạy và reset theo ngày.
 → Đạt (QA Playwright 375/768/1280, cả 2 theme + 2 lang): onboard 3 bước tạo "Ace" → achievement "Nhập môn" +20 XP tự unlock; đi loop clip `clip-ltt-01`: gist trúng +12 XP nhiệm vụ ngày "Lắng nghe lời khai", giải mã 2 cụm +30 XP + achievement "Dấu vân tay", hiểu nghĩa 100% +30 XP + "Bản tường trình hoàn hảo" → **LV 2 · 132 XP** với modal "LÊN CẤP" + 3 toast xếp lớp. Case Board hiện % thật (19% vụ nhỏ), boss có khóa + ghi điều kiện. Exam siết ngưỡng ≥1500 XP (nút mờ khi thiếu). Daily 1/3 sau 1 gist. 375px: nav 2 hàng, touch target ≥40px; light theme "văn phòng" + EN đổi toàn bộ copy. `npm run build` pass.
 
-## GĐ6 — Cá nhân hóa + polish `[ ]` (T1.7)
+## GĐ6 — Cá nhân hóa + polish `[x]` (T1.7)
 
 **Đầu ra:** hồ sơ năng lực 5 loại âm + gợi án tiếp; thẩm mỹ noir hoàn chỉnh; QA.
 
-- [ ] Tổng hợp event → "% mất dấu theo loại âm" + "Gợi án tiếp theo" (rule đơn giản, không AI)
-- [ ] Polish visual: grain, polaroid, neon logo, waveform, empty state kiểu hồ sơ vụ án
-- [ ] Light theme "văn phòng ban ngày" hoàn chỉnh (không phải light mặc định)
-- [ ] QA golden path: đăng nhập → tạo thám tử → nhiệm vụ ngày → nghe mù → mổ xẻ → phá vụ nhỏ → boss → hồ sơ năng lực
-- [ ] QA edge: Firebase chưa cấu hình / chưa đăng nhập / tua sai timestamp / clip dài
-- [ ] QA responsive: 375px (điện thoại) / 768px (tablet) / desktop — cả 2 theme, cả 2 ngôn ngữ
+- [x] Tổng hợp event → "% mất dấu theo loại âm" + "Gợi án tiếp theo" (rule đơn giản, không AI)
+- [x] Polish visual: grain, polaroid, neon logo, waveform, empty state kiểu hồ sơ vụ án
+- [x] Light theme "văn phòng ban ngày" hoàn chỉnh (không phải light mặc định)
+- [x] QA golden path: đăng nhập → tạo thám tử → nhiệm vụ ngày → nghe mù → mổ xẻ → phá vụ nhỏ → boss → hồ sơ năng lực
+- [x] QA edge: Firebase chưa cấu hình / chưa đăng nhập / tua sai timestamp / clip dài
+- [x] QA responsive: 375px (điện thoại) / 768px (tablet) / desktop — cả 2 theme, cả 2 ngôn ngữ
 
 **Done khi:** golden path đi trơn trên cả 2 theme + cả 2 ngôn ngữ; hồ sơ năng lực phản ánh đúng dữ liệu mổ xẻ; dùng được trên điện thoại và tablet.
+→ Đạt: hồ sơ năng lực tính từ event thật theo rule `mất = 3×miss + 2×fuzzy + seek + replay` / `bắt lại = 3×hit` (`src/features/progress/stats.ts`) — QA loop `clip-ltt-01`: 1 miss + 1 hit + 1 self_fuzzy (reduced) → "Nuốt/gọn 63% · 2 tín hiệu" khớp tay (5/8), 4 loại còn lại "chưa có dữ liệu" (không hiển thị 0% giả). "Gợi án tiếp theo" rule: chưa dữ liệu → clip bậc thấp nhất (`clip-ltt-01`); có dữ liệu → clip chưa xong nặng đúng loại âm yếu (weak=reduced → `clip-b99-02`, 12 cụm reduced). Event replay/self_fuzzy gắn `categories[]` (vẫn 1 event/lần bấm — không lệch `ach-replay-10`/`ach-timemachine`); SPEC §5 cập nhật. Polish: polaroid có băng keo + ghim đỏ, neon-flicker logo (tắt khi light/reduced-motion), playhead sóng âm có glow, empty state Profile/404 kiểu hồ sơ vụ án (dossier + dấu ?). Light theme: tắt hào quang neon, grain nhẹ, bóng polaroid/nút mát — "văn phòng ban ngày" đúng nghĩa. QA Playwright (Firefox, 375/768/1280): golden path trọn onboard 3 bước → +20 XP "Nhập môn" → loop `clip-ltt-01` (nghe mù không lộ chữ → gist "Đoán trúng" → mổ xẻ 2 cụm → giải mã miss→hit → "vẫn còn mơ" → ghi 2 manh mối → "Hồ sơ đã đóng") → level-up modal LV 2 chặn đúng lúc → daily 1/1 · 1/4 · 0/3 từ event thật; phá vụ nhỏ "Bản build GTA 6 bị lộ" → stamp "CASE CLOSED" + boss "Ai là nội gián?" tự mở khóa (tính từ `ClipProgress`). Edge: Firebase chưa cấu hình hiển thị hướng dẫn ở `/login`, "Khách lạ" không chặn học; `seekMs`/`playSpan` clamp `[0, clipDurationMs]`; clip dài nhất 90s (`clip-afjm-01`) + 404 dossier không tràn ngang. Overflow 375px = 0px mọi trang; 4 combo theme×lang đã soi bằng screenshot. Sửa lỗi spec: chữ Việt trong Special Elite (chưa có subset vietnamese — SPEC §4) → `.font-brand-i18n` tự đổi Be Vietnam Pro khi `lang=vi`, giữ máy chữ khi `en`; nhãn brand hardcode tiếng Anh (HEARLOCK, CASE BOARD…) vẫn font-brand. `npm run build` pass.
 
 ---
 

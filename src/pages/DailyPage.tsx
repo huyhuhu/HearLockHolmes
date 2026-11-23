@@ -113,7 +113,7 @@ export function DailyPage() {
 
       {doneCount === daily.missions.length ? (
         <div className="anim-stamp mt-10 rounded-sm border border-[var(--color-amber)] bg-[color-mix(in_srgb,var(--color-amber)_10%,transparent)] px-6 py-6 text-center">
-          <p className="font-brand text-sm tracking-[0.3em] text-[var(--color-amber)]">
+          <p className="font-brand-i18n text-sm tracking-[0.3em] text-[var(--color-amber)]">
             {t("daily.allDone")}
           </p>
           <p className="mt-2 text-sm text-[var(--color-smoke)]">{t("daily.allDoneSub")}</p>

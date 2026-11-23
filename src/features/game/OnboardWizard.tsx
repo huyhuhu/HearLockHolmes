@@ -154,7 +154,7 @@ export function OnboardWizard({ redirectTo }: { redirectTo?: string }) {
           </div>
 
           <label className="mt-8 block">
-            <span className="font-brand text-[10px] tracking-[0.3em] text-[var(--color-smoke)]">
+            <span className="font-brand-i18n text-[10px] tracking-[0.3em] text-[var(--color-smoke)]">
               {t("onboard.motto")}
             </span>
             <input

@@ -176,7 +176,7 @@ export function CaseBoard({
         <div className="anim-fade-up mx-auto mt-10 w-full max-w-2xl">
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-[color-mix(in_srgb,var(--color-chalk)_14%,transparent)]" />
-            <h2 className="font-brand text-sm tracking-[0.3em] text-[var(--color-smoke)]">
+            <h2 className="font-brand-i18n text-sm tracking-[0.3em] text-[var(--color-smoke)]">
               DRILL — {t("case.drill")}
             </h2>
             <div className="h-px flex-1 bg-[color-mix(in_srgb,var(--color-chalk)_14%,transparent)]" />

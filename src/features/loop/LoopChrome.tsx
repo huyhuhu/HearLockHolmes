@@ -54,7 +54,7 @@ export function StageRail({ stage }: { stage: Stage }) {
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <p className="font-brand text-[11px] tracking-[0.32em] text-[var(--color-amber)]">
+    <p className="font-brand-i18n text-[11px] tracking-[0.32em] text-[var(--color-amber)]">
       {children}
     </p>
   );
