@@ -45,7 +45,7 @@ export default function App() {
       <I18nProvider>
         <AuthProvider>
           <GameProvider cases={seedCases} clips={seedClips}>
-            <BrowserRouter>
+            <BrowserRouter basename={import.meta.env.BASE_URL}>
               <div className="relative z-10 min-h-screen">
                 <TopBar />
                 <AnimatedRoutes />
