@@ -102,13 +102,17 @@ export function Companion() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={t("companion.open")}
-        className="anim-glow group relative h-16 w-16 rounded-full border border-[var(--color-amber)] bg-[var(--color-ink)] p-1 shadow-2xl transition-transform hover:scale-105 active:scale-95"
+        className={`group relative flex h-14 w-14 items-center justify-center rounded-full border bg-[var(--color-ink-2)] shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-all hover:scale-105 active:scale-95 ${
+          companion
+            ? "anim-glow border-[var(--color-amber)]"
+            : "border-[color-mix(in_srgb,var(--color-amber)_35%,transparent)] hover:border-[var(--color-amber)]"
+        }`}
       >
-        <span className="anim-wren block h-full w-full">
+        <span className="anim-wren block h-10 w-10">
           <WrenArt />
         </span>
         {!open && companion ? (
-          <span className="absolute -right-0.5 -top-0.5 h-3.5 w-3.5 rounded-full bg-[var(--color-neon-soft)] shadow-lg" />
+          <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border border-[var(--color-ink-2)] bg-[var(--color-neon-soft)] shadow-lg" />
         ) : null}
       </button>
     </div>

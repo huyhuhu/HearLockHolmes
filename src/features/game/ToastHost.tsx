@@ -98,7 +98,7 @@ export function ToastHost() {
   const { toasts, dismissToast } = useGame();
   return (
     <>
-      <div className="pointer-events-none fixed bottom-4 right-4 z-[80] flex flex-col items-end gap-2">
+      <div className="pointer-events-none fixed bottom-24 right-4 z-[80] flex flex-col items-end gap-2">
         {toasts.map((toast) => (
           <ToastCard key={toast.id} toast={toast} onDismiss={() => dismissToast(toast.id)} />
         ))}

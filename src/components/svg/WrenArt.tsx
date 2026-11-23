@@ -37,7 +37,7 @@ export function WrenArt({ className }: { className?: string }) {
       {/* mỏ */}
       <path d="M78 44 L98 48 L78 54 Z" fill="var(--color-amber)" opacity="0.9" />
       {/* mắt */}
-      <g className="wren-eye">
+      <g className="anim-wren-eye">
         <circle cx="66" cy="44" r="5" fill="var(--color-amber)" />
         <circle cx="67.5" cy="43" r="1.8" fill="var(--color-void)" />
       </g>

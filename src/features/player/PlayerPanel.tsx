@@ -251,7 +251,7 @@ function FloatingDeck() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 flex flex-col items-center gap-2 lg:hidden">
+    <div className="fixed bottom-4 right-4 z-40 flex items-end gap-2 lg:hidden">
       {view.loop ? (
         <RoundControl
           onClick={() => api.clearLoop()}
@@ -278,15 +278,9 @@ function FloatingDeck() {
         onClick={() => setOpen(false)}
         aria-label={t("player.hide")}
         title={t("player.hide")}
-        className="flex h-10 w-10 items-center justify-center"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--color-chalk)_22%,transparent)] bg-[var(--color-ink-2)] text-xs text-[var(--color-smoke)] shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-all hover:border-[color-mix(in_srgb,var(--color-amber)_50%,transparent)] hover:text-[var(--color-amber)] active:scale-95"
       >
-        {/* vòng chạm 40px, phần nhìn nhỏ hơn cho nhẹ mắt */}
-        <span
-          aria-hidden
-          className="flex h-7 w-7 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--color-chalk)_22%,transparent)] bg-[var(--color-ink-2)] text-[10px] text-[var(--color-smoke)]"
-        >
-          ⌄
-        </span>
+        <span aria-hidden>⌄</span>
       </button>
     </div>
   );
