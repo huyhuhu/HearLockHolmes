@@ -106,6 +106,7 @@ Các bước:
 - Game layer **không hardcode thắng** — mọi trạng thái từ dữ liệu học thật.
 - **Cấm** Inter, gradient tím, hero 3 cột, gamification ồn ào (streak phạt, bảng vàng rực rỡ).
 - Feature ngoài MVP → thêm vào Backlog trong SPEC, không làm ngay.
+- **Content mới (clip/case)**: làm theo [`doc/CONTENT-SOP.md`](./CONTENT-SOP.md) — pipeline chuẩn hoá, model rẻ annotate qua overlay JSON, validator là cổng chất lượng.
 - Sau mỗi GĐ: chạy `npm run build` + tự đi golden path của GĐ đó trước khi đánh dấu xong.
 - **Git**: commit theo từng GĐ/đơn vị logic ("commit từ từ"), không gom một cục; không commit `.env.local`.
 
