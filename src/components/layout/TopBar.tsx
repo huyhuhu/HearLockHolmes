@@ -18,7 +18,7 @@ function ToggleButton({
       type="button"
       onClick={onClick}
       title={title}
-      className="btn-ghost min-h-11 rounded-sm px-3 py-1.5 text-xs"
+      className="btn-ghost min-h-11 min-w-11 rounded-sm px-3 py-1.5 text-xs"
     >
       {children}
     </button>
@@ -87,7 +87,7 @@ export function TopBar() {
               <button
                 type="button"
                 onClick={() => void signOutUser()}
-                className="btn-ghost min-h-11 rounded-sm px-3 py-1.5 text-xs"
+                className="btn-ghost min-h-11 min-w-11 rounded-sm px-3 py-1.5 text-xs"
               >
                 {t("auth.logout")}
               </button>

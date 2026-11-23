@@ -4,9 +4,9 @@
  * Công thái học (SPEC §4 + rule dự án):
  * - Ít nút, mỗi hàng 2–3 control; label tự giải thích (bỏ chữ "TỐC ĐỘ").
  * - Bỏ đánh dấu A thủ công — A–B tự chạy khi chạm cụm, không cần thêm nút.
- * - Thanh điều khiển nổi đáy trên mobile: dừng/tiếp luôn trong tầm ngón cái.
+ * - Nút tròn nổi trên mobile: dừng/tiếp trong tầm ngón cái, ẩn được.
  */
-import { useMemo, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { useI18n } from "../../lib/i18n";
 import type { Sentence } from "../../types/content";
 import {
@@ -92,7 +92,6 @@ function DeckButton({
   title,
   children,
   wide,
-  tone = "ghost",
 }: {
   onClick: () => void;
   active?: boolean;
@@ -100,7 +99,6 @@ function DeckButton({
   title?: string;
   children: ReactNode;
   wide?: boolean;
-  tone?: "ghost" | "amber";
 }) {
   return (
     <button
@@ -108,9 +106,9 @@ function DeckButton({
       title={title}
       disabled={disabled}
       onClick={onClick}
-      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-sm px-3 py-2 text-xs disabled:opacity-40 ${
-        tone === "amber" ? "btn-amber" : "btn-ghost"
-      } ${wide ? "flex-1" : ""} ${
+      className={`btn-ghost flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-sm px-3 py-2 text-xs disabled:opacity-40 ${
+        wide ? "flex-1" : ""
+      } ${
         active
           ? "border-[var(--color-amber)] bg-[color-mix(in_srgb,var(--color-amber)_18%,transparent)] text-[var(--color-amber)]"
           : ""
@@ -121,12 +119,12 @@ function DeckButton({
   );
 }
 
-/** Nút phát/dừng — dùng chung cho deck và thanh đáy */
+/** Nút phát/dừng — dùng chung cho deck và nút tròn nổi */
 function PlayButton({ wide }: { wide?: boolean }) {
   const { t } = useI18n();
   const { api, view } = useClipPlayer();
   return (
-    <DeckButton onClick={() => api.toggle()} active={view.playing} wide={wide} tone="amber">
+    <DeckButton onClick={() => api.toggle()} active={view.playing} wide={wide}>
       {view.playing ? (
         <>
           <span aria-hidden>❚❚</span> {t("player.pause")}
@@ -221,15 +219,110 @@ export function PlayerPanel({
         </div>
       </section>
 
-      {/* thanh điều khiển nổi đáy — mobile/tablet, trong tầm ngón cái */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[color-mix(in_srgb,var(--color-chalk)_16%,transparent)] bg-[color-mix(in_srgb,var(--color-ink)_94%,transparent)] px-3 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-2 backdrop-blur-sm lg:hidden">
-        <div className="mx-auto flex max-w-6xl items-center gap-2">
-          <PlayButton wide />
-          <ReplayButton />
-          <ClearLoopButton />
-        </div>
-      </div>
+      {/* nút tròn nổi — mobile/tablet, trong tầm ngón cái, ẩn được */}
+      <FloatingDeck />
     </>
+  );
+}
+
+/**
+ * Nút tròn nổi thay cho thanh đáy: chỉ một điểm chạm phát/dừng,
+ * không giành chỗ, không thêm khối màu đặc. Bấm mũi tên để ẩn hẳn.
+ */
+function FloatingDeck() {
+  const { t } = useI18n();
+  const { api, view } = useClipPlayer();
+  const [open, setOpen] = useState(true);
+
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label={t("player.show")}
+        title={t("player.show")}
+        className="fixed bottom-4 right-0 z-40 flex h-14 w-10 items-center justify-start rounded-l-full border border-r-0 border-[color-mix(in_srgb,var(--color-amber)_35%,transparent)] bg-[var(--color-ink-2)] pl-1.5 text-[var(--color-amber)] shadow-[0_8px_24px_rgba(0,0,0,0.4)] lg:hidden"
+      >
+        <span aria-hidden className="text-sm">
+          ‹
+        </span>
+      </button>
+    );
+  }
+
+  return (
+    <div className="fixed bottom-4 right-4 z-40 flex flex-col items-center gap-2 lg:hidden">
+      {view.loop ? (
+        <RoundControl
+          onClick={() => api.clearLoop()}
+          label={t("player.abClear")}
+          title={t("player.abClear")}
+        >
+          <span aria-hidden className="text-xs">
+            ✕
+          </span>
+        </RoundControl>
+      ) : null}
+
+      <RoundControl
+        big
+        onClick={() => api.toggle()}
+        label={view.playing ? t("player.pause") : t("player.play")}
+        active={view.playing}
+      >
+        <span aria-hidden>{view.playing ? "❚❚" : "▶"}</span>
+      </RoundControl>
+
+      <button
+        type="button"
+        onClick={() => setOpen(false)}
+        aria-label={t("player.hide")}
+        title={t("player.hide")}
+        className="flex h-10 w-10 items-center justify-center"
+      >
+        {/* vòng chạm 40px, phần nhìn nhỏ hơn cho nhẹ mắt */}
+        <span
+          aria-hidden
+          className="flex h-7 w-7 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--color-chalk)_22%,transparent)] bg-[var(--color-ink-2)] text-[10px] text-[var(--color-smoke)]"
+        >
+          ⌄
+        </span>
+      </button>
+    </div>
+  );
+}
+
+function RoundControl({
+  onClick,
+  label,
+  title,
+  active,
+  big,
+  children,
+}: {
+  onClick: () => void;
+  label: string;
+  title?: string;
+  active?: boolean;
+  big?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={title ?? label}
+      className={`flex items-center justify-center rounded-full border shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-transform ${
+        big ? "h-14 w-14 text-base" : "h-10 w-10 text-xs"
+      } ${
+        active
+          ? "border-[var(--color-amber)] bg-[color-mix(in_srgb,var(--color-amber)_18%,transparent)] text-[var(--color-amber)]"
+          : "border-[color-mix(in_srgb,var(--color-amber)_35%,transparent)] bg-[var(--color-ink-2)] text-[var(--color-amber)]"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
 
