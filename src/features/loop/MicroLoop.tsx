@@ -120,7 +120,15 @@ export function MicroLoop({ clip }: { clip: Clip }) {
     const next = !(fuzzy[sentenceId] === true);
     setFuzzy((current) => ({ ...current, [sentenceId]: next }));
     if (next) {
-      progressStore.recordEvent({ type: "self_fuzzy", clipId: clip.id });
+      const sentence = clip.sentences.find((s) => s.id === sentenceId);
+      const categories = sentence
+        ? [...new Set(sentence.clusters.map((c) => c.category))]
+        : [];
+      progressStore.recordEvent({
+        type: "self_fuzzy",
+        clipId: clip.id,
+        ...(categories.length > 0 ? { categories } : {}),
+      });
       notify({ kind: "self_fuzzy", clipId: clip.id });
     }
   };

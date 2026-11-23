@@ -51,6 +51,8 @@ export interface LearnEvent {
   clipId: string;
   clusterId?: string;
   category?: SoundCategory;
+  /** hành động cấp câu (replay/self_fuzzy) chạm nhiều loại âm — vẫn 1 event/lần bấm */
+  categories?: SoundCategory[];
   at: number;
 }
 

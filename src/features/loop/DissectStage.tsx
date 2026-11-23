@@ -92,7 +92,11 @@ export function DissectStage({
         onPlay={() => {
           onActiveCluster(null);
           api.playSpan(sentence.startMs, sentence.endMs, { loop: false });
-          progressStore.recordEvent({ type: "replay", clipId: clip.id });
+          progressStore.recordEvent({
+            type: "replay",
+            clipId: clip.id,
+            categories: [...new Set(sentence.clusters.map((c) => c.category))],
+          });
           notify({ kind: "replay", clipId: clip.id });
         }}
       />

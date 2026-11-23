@@ -170,6 +170,21 @@ const dict = {
     "profile.maxRank": "Đã đạt hạng cao nhất. Vụ khó hơn vẫn còn đó.",
     "profile.achievements": "THÀNH TỰU",
 
+    "profile.skills": "HỒ SƠ NĂNG LỰC",
+    "profile.skillsHint":
+      "Tỷ lệ mất dấu theo 5 loại âm — tính từ lần sai dạng sạch, tự chấm “vẫn còn mơ”, tua nghe lại và nghe lại.",
+    "profile.loss": "mất dấu",
+    "profile.noSignal": "chưa có dữ liệu",
+    "profile.signalCount": "{n} tín hiệu",
+    "profile.suggest": "GỢI ÁN TIẾP THEO",
+    "profile.suggestGo": "Điều tra clip này",
+    "profile.suggestWeak":
+      "Clip này nặng {cat} — loại âm bạn đang mất dấu nhiều nhất.",
+    "profile.suggestFresh":
+      "Chưa đủ dấu vết thống kê. Bắt đầu từ clip bậc thấp nhất.",
+    "profile.suggestRedo":
+      "Đã đi hết kho tư liệu — luyện lại clip này để siết lại dấu.",
+
     "onboard.title": "Lập hồ sơ thám tử",
     "onboard.sub":
       "Trợ thủ Wren sẽ đồng hành cùng bạn. Chọn diện mạo — thế giới noir cần một gương mặt.",
@@ -377,6 +392,21 @@ const dict = {
     "profile.nextRank": "Next rank: {rank} — needs ≥{threshold} XP + an exam.",
     "profile.maxRank": "Top rank reached. Harder cases remain.",
     "profile.achievements": "ACHIEVEMENTS",
+
+    "profile.skills": "SOUND PROFILE",
+    "profile.skillsHint":
+      "Trail-loss rate across 5 sound types — from wrong clean forms, “still fuzzy” self-reports, span re-hears and replays.",
+    "profile.loss": "lost",
+    "profile.noSignal": "no signal yet",
+    "profile.signalCount": "{n} signals",
+    "profile.suggest": "NEXT CASE LEAD",
+    "profile.suggestGo": "Investigate this clip",
+    "profile.suggestWeak":
+      "This clip is heavy on {cat} — the sound you lose most often.",
+    "profile.suggestFresh":
+      "Not enough traces yet. Start from the lowest-level clip.",
+    "profile.suggestRedo":
+      "Archive exhausted — re-run this clip to tighten your trail.",
 
     "onboard.title": "Create your detective",
     "onboard.sub":

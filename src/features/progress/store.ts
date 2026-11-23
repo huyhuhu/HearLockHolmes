@@ -63,6 +63,7 @@ export type EventInput = {
   clipId: string;
   clusterId?: string;
   category?: SoundCategory;
+  categories?: SoundCategory[];
 };
 
 export const progressStore = {
@@ -75,6 +76,9 @@ export const progressStore = {
       at: Date.now(),
       ...(input.clusterId ? { clusterId: input.clusterId } : {}),
       ...(input.category ? { category: input.category } : {}),
+      ...(input.categories && input.categories.length > 0
+        ? { categories: input.categories }
+        : {}),
     };
     const events = [event, ...snap.events].slice(0, MAX_EVENTS);
     write({ ...snap, events });

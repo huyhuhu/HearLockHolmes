@@ -119,7 +119,7 @@ clips/{clipId}   { caseId, videoId, youtubeUrl, startOffsetMs, title, durationSe
 users/{uid}                { displayName, email, avatarId, archetype, rank, xp, lang, theme, createdAt }
 users/{uid}/clues/{clueId} { clipId, clusterId, decodedAt, attempts, correct }
 users/{uid}/progress/{id}  { listens, gistPassed, comprehensionScore, decodedClusters[], completedAt }
-users/{uid}/events/{id}    { type: replay|seek|decode_hit|decode_miss|self_fuzzy, clipId, clusterId?, category?, at }
+users/{uid}/events/{id}    { type: replay|seek|decode_hit|decode_miss|self_fuzzy, clipId, clusterId?, category?, categories?, at }
 users/{uid}/daily/{date}   { missions[{ id, type, target, done, rewardXp }] }
 users/{uid}/exams/{rank}   { passedAt, score }
 ```
