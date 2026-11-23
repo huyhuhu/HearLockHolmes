@@ -43,7 +43,7 @@ export function TopBar() {
     <header className="sticky top-0 z-50 border-b border-[color-mix(in_srgb,var(--color-chalk)_12%,transparent)] bg-[color-mix(in_srgb,var(--color-ink)_88%,transparent)] backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
         <Link to="/" className="group inline-flex min-h-11 shrink-0 flex-col justify-center">
-          <div className="neon-text font-brand text-lg leading-none tracking-widest">
+          <div className="neon-text neon-flicker font-brand text-lg leading-none tracking-widest">
             HEARLOCK
           </div>
           <div className="font-brand text-[10px] leading-none tracking-[0.35em] text-[var(--color-smoke)] group-hover:text-[var(--color-amber)]">

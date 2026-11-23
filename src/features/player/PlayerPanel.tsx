@@ -68,7 +68,7 @@ function Waveform({
 
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 w-px bg-[var(--color-neon-soft)]"
+        className="pointer-events-none absolute inset-y-0 w-px bg-[var(--color-neon-soft)] shadow-[0_0_8px_color-mix(in_srgb,var(--color-neon)_65%,transparent)]"
         style={{ left: `${Math.min(100, Math.max(0, progress * 100))}%` }}
       />
 
