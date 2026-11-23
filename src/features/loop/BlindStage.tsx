@@ -25,7 +25,7 @@ export function BlindStage({
   onAnswerGist: (choice: number) => void;
   onEnterLab: () => void;
 }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { api } = useClipPlayer();
   const sentence = clip.sentences[sentenceIndex];
 
@@ -57,11 +57,11 @@ export function BlindStage({
           {t("loop.blind.gateHint")}
         </p>
         <p className="mb-4 text-base font-semibold leading-relaxed text-[var(--color-chalk)]">
-          {clip.gistQuestion.prompt}
+          {clip.gistQuestion.prompt[lang]}
         </p>
 
         <McqChoices
-          choices={clip.gistQuestion.choices}
+          choices={clip.gistQuestion.choices.map((c) => c[lang])}
           value={gistChoice}
           correctIndex={clip.gistQuestion.answerIndex}
           reveal={gistRevealed}

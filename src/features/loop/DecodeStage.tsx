@@ -41,7 +41,7 @@ export function DecodeStage({
   onToRelisten: () => void;
   onJumpClusters: () => void;
 }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { api } = useClipPlayer();
   const sentence = clip.sentences[sentenceIndex];
   const clipDurationMs = clip.durationSec * 1000;
@@ -152,7 +152,7 @@ export function DecodeStage({
                   <span className="mb-1 block text-[10px] uppercase tracking-[0.16em] text-[var(--color-amber)]">
                     {t("loop.decode.note")}
                   </span>
-                  {cluster.note}
+                  {cluster.note[lang]}
                 </p>
               ) : null}
             </SectionCard>
@@ -166,12 +166,12 @@ export function DecodeStage({
         </p>
         <div className="flex flex-col gap-5">
           {clip.comprehension.map((q, i) => (
-            <div key={`${i}-${q.prompt}`}>
+            <div key={`${i}-${q.prompt.en}`}>
               <p className="mb-2 text-sm font-semibold leading-relaxed text-[var(--color-chalk)]">
-                {q.prompt}
+                {q.prompt[lang]}
               </p>
               <McqChoices
-                choices={q.choices}
+                choices={q.choices.map((c) => c[lang])}
                 value={comprehension[i] ?? null}
                 correctIndex={q.answerIndex}
                 reveal={comprehension[i] !== undefined}

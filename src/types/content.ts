@@ -28,11 +28,17 @@ export interface Cluster {
   category: SoundCategory;
   /** [startMs, endMs] của cụm bị nuốt/nối trong clip */
   span: [number, number];
-  /** 3–4 lựa chọn "dạng sạch" — chọn đúng 1 */
+  /** 3–4 lựa chọn "dạng sạch" — chọn đúng 1 (luôn tiếng Anh — dạng của audio) */
   cleanForms: string[];
   answerIndex: number;
   /** vì sao nghe không ra (1 câu, cho người học) */
-  note?: string;
+  note?: LocalizedText;
+}
+
+/** Chuỗi song ngữ — hiển thị theo lang UI (SPEC §2) */
+export interface LocalizedText {
+  vi: string;
+  en: string;
 }
 
 export interface Sentence {
@@ -47,8 +53,9 @@ export interface Sentence {
 }
 
 export interface MultipleChoice {
-  prompt: string;
-  choices: string[];
+  /** câu hỏi hiện trường / hiểu nghĩa — song ngữ theo lang UI */
+  prompt: LocalizedText;
+  choices: LocalizedText[];
   answerIndex: number;
 }
 

@@ -9,43 +9,103 @@
   "level": 2,
   "category": "series",
   "gistQuestion": {
-    "prompt": "Người nói đang nói về điều gì trong đoạn này?",
+    "prompt": {
+      "vi": "Người nói đang nói về điều gì trong đoạn này?",
+      "en": "What is the speaker talking about in this segment?"
+    },
     "choices": [
-      "Khả năng sáng tạo và sai lầm của trẻ em",
-      "Giá vé xem kịch",
-      "Cách tuyển nhân viên công ty",
-      "Lịch sử hội họa Picasso"
+      {
+        "vi": "Khả năng sáng tạo và sai lầm của trẻ em",
+        "en": "Children's creativity and mistakes"
+      },
+      {
+        "vi": "Giá vé xem kịch",
+        "en": "Theater ticket prices"
+      },
+      {
+        "vi": "Cách tuyển nhân viên công ty",
+        "en": "How companies hire staff"
+      },
+      {
+        "vi": "Lịch sử hội họa Picasso",
+        "en": "The history of Picasso's painting"
+      }
     ],
     "answerIndex": 0
   },
   "comprehension": [
     {
-      "prompt": "Theo người nói, trẻ em có điểm chung gì?",
+      "prompt": {
+        "vi": "Theo người nói, trẻ em có điểm chung gì?",
+        "en": "According to the speaker, what do children have in common?"
+      },
       "choices": [
-        "Sẵn sàng thử và không sợ sai",
-        "Chỉ thích môn toán",
-        "Sợ bị điểm kém",
-        "Không thích sáng tạo"
+        {
+          "vi": "Sẵn sàng thử và không sợ sai",
+          "en": "Willing to try and not afraid to fail"
+        },
+        {
+          "vi": "Chỉ thích môn toán",
+          "en": "Only like math"
+        },
+        {
+          "vi": "Sợ bị điểm kém",
+          "en": "Afraid of bad grades"
+        },
+        {
+          "vi": "Không thích sáng tạo",
+          "en": "Dislike creativity"
+        }
       ],
       "answerIndex": 0
     },
     {
-      "prompt": "Điều gì xảy ra khi trẻ lớn lên?",
+      "prompt": {
+        "vi": "Điều gì xảy ra khi trẻ lớn lên?",
+        "en": "What happens as children grow up?"
+      },
       "choices": [
-        "Mất dần khả năng dám thử",
-        "Trở nên sáng tạo hơn",
-        "Đi học nghệ thuật",
-        "Chuyển trường mới"
+        {
+          "vi": "Mất dần khả năng dám thử",
+          "en": "Gradually lose the willingness to try"
+        },
+        {
+          "vi": "Trở nên sáng tạo hơn",
+          "en": "Become more creative"
+        },
+        {
+          "vi": "Đi học nghệ thuật",
+          "en": "Go to art school"
+        },
+        {
+          "vi": "Chuyển trường mới",
+          "en": "Change schools"
+        }
       ],
       "answerIndex": 0
     },
     {
-      "prompt": "Công ty và trường học đang làm gì với sai lầm?",
+      "prompt": {
+        "vi": "Công ty và trường học đang làm gì với sai lầm?",
+        "en": "What are companies and schools doing with mistakes?"
+      },
       "choices": [
-        "Gán nhãn xấu cho sai lầm",
-        "Khen thưởng sai lầm",
-        "Bỏ qua hoàn toàn",
-        "Tổ chức thi sai lầm"
+        {
+          "vi": "Gán nhãn xấu cho sai lầm",
+          "en": "Labeling mistakes as bad"
+        },
+        {
+          "vi": "Khen thưởng sai lầm",
+          "en": "Rewarding mistakes"
+        },
+        {
+          "vi": "Bỏ qua hoàn toàn",
+          "en": "Ignoring them entirely"
+        },
+        {
+          "vi": "Tổ chức thi sai lầm",
+          "en": "Holding mistake contests"
+        }
       ],
       "answerIndex": 0
     }
@@ -187,7 +247,10 @@
             "don't now"
           ],
           "answerIndex": 0,
-          "note": "'don't know' → 'dunno' /dəˈnoʊ/ — /t/ + /k/ bay mất trong lời nói tự nhiên."
+          "note": {
+            "vi": "'don't know' → 'dunno' /dəˈnoʊ/ — /t/ + /k/ bay mất trong lời nói tự nhiên.",
+            "en": "'don't know' → 'dunno' /dəˈnoʊ/ — /t/ + /k/ vanish in natural speech."
+          }
         },
         {
           "id": "clu-02",
@@ -203,7 +266,10 @@
             "there will have"
           ],
           "answerIndex": 0,
-          "note": "'they'll have' → /ˈðeɪləv/ — 'will' gộp thành âm đuôi /l/, 'have' thành /əv/."
+          "note": {
+            "vi": "'they'll have' → /ˈðeɪləv/ — 'will' gộp thành âm đuôi /l/, 'have' thành /əv/.",
+            "en": "'they'll have' → /ˈðeɪləv/ — 'will' collapses into a coda /l/, 'have' becomes /əv/."
+          }
         }
       ]
     },
@@ -693,7 +759,10 @@
             "running our companies"
           ],
           "answerIndex": 0,
-          "note": "'run‿our' — /n/ nối thẳng vào nguyên âm /aʊ/, nghe như một từ 'runour'."
+          "note": {
+            "vi": "'run‿our' — /n/ nối thẳng vào nguyên âm /aʊ/, nghe như một từ 'runour'.",
+            "en": "'run‿our' — /n/ links straight into the vowel /aʊ/, heard as one word 'runour'."
+          }
         }
       ]
     },

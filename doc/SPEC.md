@@ -27,7 +27,7 @@ Quy tắc: clip ngắn **30–90 giây**; timestamp cấp độ **TỪ** (word-l
 | Stack | **Vite + React + TypeScript**. Tailwind chỉ làm công cụ layout; **design tokens custom hoàn toàn** |
 | Database | **Firestore**. Content hệ thống (`cases/clips`) tách bạch dữ liệu người dùng (`users/{uid}/...`) |
 | Xác minh mổ xẻ | **Chọn dạng sạch** của câu (3–4 lựa chọn gần nhau) + 3 câu hiểu nghĩa MCQ |
-| UI language | **Song ngữ VI/EN**, toggle nhanh trên top bar. Audio/transcript luôn tiếng Anh |
+| UI language | **Song ngữ VI/EN**, toggle nhanh trên top bar. Audio/transcript luôn tiếng Anh; câu hỏi nội dung (gist/comprehension) + note cụm có `{vi,en}` — đổi lang UI thì nội dung đổi theo |
 | Theme | Toggle sáng/tối trên top bar. Mặc định **noir đêm** (chàm đen + hổ phách); sáng = **"ban ngày tại văn phòng"** (giấy ngả vàng, mực đen) — không phải light theme mặc định |
 | Avatar | **6 chân dung noir** (imagegen, sinh 1 lần) + archetype (cựu cảnh sát / phóng viên điều tra / chuyên gia giám định âm thanh / thám tử tư / hacker mũ xám / nhà báo) |
 | Firebase | Scaffold đọc config từ `.env.local`. MVP chạy **local**; Firebase Hosting khi nào muốn. README có các bước bật Google Sign-in |
@@ -86,12 +86,12 @@ Mọi GĐ có UI đều phải kiểm tra ở **375px / 768px / desktop** trư�
 # SYSTEM CONTENT — public read, admin write
 cases/{caseId}   { title, titleVi, level, type: 'small'|'boss', clipIds[], synopsis }
 clips/{clipId}   { caseId, videoId, youtubeUrl, startOffsetMs, title, durationSec, level, category,
-                   gistQuestion { prompt, choices[4], answerIndex },
-                   comprehension[{ question, choices[4], answerIndex }],
+                   gistQuestion { prompt{vi,en}, choices[4]{vi,en}, answerIndex },
+                   comprehension[{ prompt{vi,en}, choices[4]{vi,en}, answerIndex }],
                    sentences[{ id, text, startMs, endMs,
                      words[{ w, s, e }],
                      clusters[{ id, category, span[startMs,endMs],
-                                cleanForms[3–4], answerIndex }] }] }
+                                cleanForms[3–4], answerIndex, note{vi,en} }] }] }
 
 # USER DATA — owner-only read/write
 users/{uid}                { displayName, email, avatarId, archetype, rank, xp, lang, theme, createdAt }

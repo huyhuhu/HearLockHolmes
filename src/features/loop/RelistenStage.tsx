@@ -37,7 +37,7 @@ export function RelistenStage({
   onFinish: () => void;
   onJumpClusters: () => void;
 }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { api } = useClipPlayer();
   const sentence = clip.sentences[sentenceIndex];
 
@@ -132,7 +132,7 @@ export function RelistenStage({
                       {filed ? "📌" : "·"}
                     </span>
                     <span className="flex-1 leading-relaxed text-[var(--color-chalk)]">
-                      {cluster.note ?? cluster.cleanForms[cluster.answerIndex]}
+                      {cluster.note ? cluster.note[lang] : cluster.cleanForms[cluster.answerIndex]}
                     </span>
                     <span className="text-[10px] uppercase tracking-[0.14em] text-[var(--color-smoke)]">
                       {t(`cat.${cluster.category}` as Parameters<typeof t>[0])}

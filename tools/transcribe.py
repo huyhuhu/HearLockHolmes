@@ -355,7 +355,7 @@ def main() -> None:
         "level": args.level,
         "category": args.category,
         # 2 phần dưới điền lúc annotate — xem tools/annotate-format.md
-        "gistQuestion": {"prompt": "", "choices": [], "answerIndex": 0},
+        "gistQuestion": {"prompt": {"vi": "", "en": ""}, "choices": [], "answerIndex": 0},
         "comprehension": [],
         "sentences": sentences,
     }

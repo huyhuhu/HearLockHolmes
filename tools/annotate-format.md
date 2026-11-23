@@ -43,14 +43,17 @@ Mỗi câu annotate **2–3 cụm** (nhiều quá thành nhiễu — SPEC §1). 
   "id": "clu-01",                    // duy nhất trong clip: clu-01, clu-02, ...
   "category": "reduced",             // 5 loại — xem bảng dưới
   "span": [1200, 1680],              // [startMs, endMs] clip-relative — bọc trọn cụm bị nuốt/nối
-  "cleanForms": [                    // 3–4 lựa chọn "dạng sạch" — chọn đúng 1
+  "cleanForms": [                    // 3–4 lựa chọn "dạng sạch" — chọn đúng 1 (luôn tiếng Anh)
     "What do you want to do tonight?",
     "What did you want to do tonight?",
     "What are you going to do tonight?",
     "Where do you want to go tonight?"
   ],
   "answerIndex": 0,                  // index của dạng sạch đúng trong cleanForms
-  "note": "'What do you' → /wʌdjə/ — nuốt /t/, gộp thành 'whaddya'."  // 1 câu, cho người học
+  "note": {                          // 1 câu giải thích — SONG NGỮ {vi, en}
+    "vi": "'What do you' → /wʌdjə/ — nuốt /t/, gộp thành 'whaddya'.",
+    "en": "'What do you' → /wʌdjə/ — /t/ is swallowed, fused into 'whaddya'."
+  }
 }
 ```
 
@@ -83,6 +86,7 @@ Mỗi câu annotate **2–3 cụm** (nhiều quá thành nhiễu — SPEC §1). 
 2. **Chọn 2–3 cụm/câu** — ưu tiên reduced/nuốt, nơi timestamp hay trôi nhất. Điền `category`, `span`, `cleanForms`, `answerIndex`, `note`.
 3. **Gist question** — 1 MCQ "câu hỏi hiện trường" mở khoá Phòng thí nghiệm: hỏi **chủ đề/đối tượng**, không hỏi chi tiết nghe mới ra.
 4. **Comprehension** — đúng **3** MCQ hiểu nghĩa, gắn manh mối với ngữ cảnh vụ án (SPEC §1.3).
+   `prompt` + `choices` của gist/comprehension là `{vi, en}` — song ngữ theo lang UI (SPEC §2).
 5. **Validate**:
 
 ```bash

@@ -14,8 +14,26 @@ import json
 import sys
 from pathlib import Path
 
+
 CATEGORIES = {"liaison", "reduced", "elision", "linking", "assimilation"}
 CLIP_CATEGORIES = {"tech", "game", "film", "series", "stream"}
+
+
+def is_l10n(x) -> bool:
+    """LocalizedText = {vi, en} — cả 2 chuỗi (rỗng được khi scaffold)."""
+    return (
+        isinstance(x, dict)
+        and isinstance(x.get("vi"), str)
+        and isinstance(x.get("en"), str)
+    )
+
+
+def check_l10n(ok: bool, errors: list[str], msg: str, value, allow_empty: bool) -> None:
+    if not is_l10n(value):
+        errors.append(f"{msg}: phải là object {{vi, en}}")
+        return
+    if not allow_empty and (not value["vi"].strip() or not value["en"].strip()):
+        errors.append(f"{msg}: thiếu nội dung vi/en")
 
 
 def check(cond: bool, errors: list[str], msg: str) -> None:
@@ -48,9 +66,12 @@ def validate_clip(clip: dict, scaffold: bool) -> list[str]:
         if scaffold and not gq.get("choices"):
             pass  # scaffold chưa điền
         else:
-            check(isinstance(gq.get("prompt"), str) and gq["prompt"], e, "gistQuestion.prompt: thiếu")
+            check_l10n(True, e, "gistQuestion.prompt", gq.get("prompt"), allow_empty=False)
             choices = gq.get("choices")
             check(isinstance(choices, list) and len(choices) == 4, e, "gistQuestion.choices: cần đúng 4 lựa chọn")
+            if isinstance(choices, list):
+                for ci, ch in enumerate(choices):
+                    check_l10n(True, e, f"gistQuestion.choices[{ci}]", ch, allow_empty=False)
             check(
                 isinstance(gq.get("answerIndex"), int) and choices and 0 <= gq["answerIndex"] < len(choices),
                 e,
@@ -68,8 +89,11 @@ def validate_clip(clip: dict, scaffold: bool) -> list[str]:
                 e.append(f"comprehension[{i}]: phải là object")
                 continue
             choices = q.get("choices")
-            check(isinstance(q.get("prompt"), str) and q["prompt"], e, f"comprehension[{i}].prompt: thiếu")
+            check_l10n(True, e, f"comprehension[{i}].prompt", q.get("prompt"), allow_empty=False)
             check(isinstance(choices, list) and len(choices) == 4, e, f"comprehension[{i}].choices: cần đúng 4 lựa chọn")
+            if isinstance(choices, list):
+                for ci, ch in enumerate(choices):
+                    check_l10n(True, e, f"comprehension[{i}].choices[{ci}]", ch, allow_empty=False)
             check(
                 isinstance(q.get("answerIndex"), int) and choices and 0 <= q["answerIndex"] < len(choices),
                 e,
@@ -139,7 +163,8 @@ def validate_clip(clip: dict, scaffold: bool) -> list[str]:
                 e,
                 f"{sid}.clusters[{j}] ({cid}): answerIndex ngoài khoảng cleanForms",
             )
-            check(isinstance(cl.get("note", ""), str), e, f"{sid}.clusters[{j}] ({cid}): note phải là string")
+            if "note" in cl:
+                check_l10n(True, e, f"{sid}.clusters[{j}] ({cid}).note", cl.get("note"), allow_empty=True)
 
     return e
 
