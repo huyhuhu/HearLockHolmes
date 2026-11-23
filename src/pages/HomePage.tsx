@@ -22,13 +22,23 @@ export function HomePage() {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link to="/daily" className="btn-amber rounded-sm px-5 py-2.5 text-sm">
+          <Link
+            to="/clip/clip-ted-01"
+            className="btn-amber rounded-sm px-5 py-2.5 text-sm"
+          >
+            {t("home.start")}
+          </Link>
+          <Link to="/daily" className="btn-ghost rounded-sm px-5 py-2.5 text-sm">
             {t("home.caseFiles")}
           </Link>
           <Link to="/login" className="btn-ghost rounded-sm px-5 py-2.5 text-sm">
             {t("auth.login")}
           </Link>
         </div>
+
+        <p className="mt-4 max-w-xl text-sm leading-relaxed text-[var(--color-smoke)]">
+          {t("home.startSub")}
+        </p>
       </section>
 
       <section className="mt-6">

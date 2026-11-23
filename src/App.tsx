@@ -13,6 +13,7 @@ import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { DailyPage } from "./pages/DailyPage";
 import { ProfilePage } from "./pages/ProfilePage";
+import { ClipPage } from "./pages/ClipPage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function AnimatedRoutes() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/daily" element={<DailyPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/clip/:clipId" element={<ClipPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
