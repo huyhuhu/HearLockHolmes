@@ -18,7 +18,7 @@ tools/transcribe.sh "<youtube-url>" --start 30 --end 90 --level 1 --category tec
 | `--level` | Bậc khó 1–5 theo bậc thang SPEC §6 |
 | `--category` | `tech` \| `game` \| `film` \| `series` \| `stream` |
 | `--id` | Clip id (mặc định `clip-<videoId>[-<start>]`) |
-| `--model` | Whisper model — `small` (mặc định, nhanh) hoặc `medium` (chính xác hơn) |
+| `--model` | Whisper model — `medium` (mặc định, timestamp chuẩn) hoặc `small` (nhanh hơn, kém chính xác hơn) |
 
 **Output** (`tools/out/<clipId>/` — gitignore, không commit audio):
 
@@ -86,8 +86,10 @@ Mỗi câu annotate **2–3 cụm** (nhiều quá thành nhiễu — SPEC §1). 
 5. **Validate**:
 
 ```bash
+# trước khi seed (GĐ4) — bắt đủ 2–3 cụm/câu, đúng 3 comprehension, 4 lựa chọn:
 tools/.venv/bin/python tools/validate_clip.py tools/out/<clipId>/<clipId>.clip.json
-# mới annotate xong một phần, kiểm tra scaffold:
+
+# khi mới annotate dở / kiểm tra output pipeline (GĐ2) — chỉ kiểm tra cấu trúc + phần đã điền:
 tools/.venv/bin/python tools/validate_clip.py tools/out/<clipId>/<clipId>.clip.json --scaffold
 ```
 
