@@ -136,7 +136,7 @@ export function PlayerPanel({
   return (
     <section className="lg:sticky lg:top-24">
       <div className="overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-chalk)_18%,transparent)] bg-[var(--color-ink-2)] shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
-        <div className="relative aspect-video w-full bg-black">
+        <div className="relative aspect-video w-full overflow-hidden bg-black">
           <div ref={containerRef} className="absolute inset-0" />
           {view.status !== "ready" ? (
             <div className="absolute inset-0 z-10 flex items-center justify-center px-6 text-center text-sm text-[var(--color-smoke)]">

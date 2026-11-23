@@ -20,6 +20,8 @@ type YTPlayerConstructor = new (
   element: HTMLElement,
   options: {
     videoId: string;
+    width?: number | string;
+    height?: number | string;
     playerVars?: Record<string, string | number>;
     events?: {
       onReady?: (e: { target: YTPlayerInstance }) => void;
@@ -89,6 +91,22 @@ export function loadYouTubeApi(): Promise<void> {
   return apiPromise;
 }
 
+/**
+ * Ép iframe YouTube lấp đầy container.
+ * YT.Player mặc định tạo iframe 640×390 — nếu không ép thì video bị crop
+ * và tràn đè lên waveform ở desktop.
+ */
+export function fitPlayerFrame(container: HTMLElement | null): void {
+  const frame = container?.querySelector("iframe");
+  if (!frame) return;
+  frame.style.position = "absolute";
+  frame.style.inset = "0";
+  frame.style.width = "100%";
+  frame.style.height = "100%";
+  frame.style.border = "0";
+  frame.style.maxWidth = "none";
+}
+
 export function createYouTubePlayer(
   element: HTMLElement,
   options: {
@@ -103,6 +121,9 @@ export function createYouTubePlayer(
 
   return new YT.Player(element, {
     videoId: options.videoId,
+    // lấp container — không thì iframe ra 640×390 và bị cắt
+    width: "100%",
+    height: "100%",
     playerVars: {
       start: Math.floor(options.startSeconds),
       autoplay: 0,
@@ -115,7 +136,10 @@ export function createYouTubePlayer(
       origin: window.location.origin,
     },
     events: {
-      onReady: (e) => options.onReady?.(e.target),
+      onReady: (e) => {
+        fitPlayerFrame(element.parentElement);
+        options.onReady?.(e.target);
+      },
       onStateChange: (e) =>
         options.onStateChange?.(e.data === YT.PlayerState.PLAYING),
     },

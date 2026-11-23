@@ -18,6 +18,7 @@ import {
 } from "react";
 import {
   createYouTubePlayer,
+  fitPlayerFrame,
   loadYouTubeApi,
   type YTPlayerInstance,
 } from "../../lib/youtube";
@@ -115,13 +116,20 @@ export function useClipPlayerController(args: {
     loadYouTubeApi()
       .then(() => {
         if (disposed || !containerRef.current) return;
+        const container = containerRef.current;
+        // node YT sẽ thay thế — phải có kích thước thật trước khi Player đọc
         const mount = document.createElement("div");
-        containerRef.current.appendChild(mount);
+        mount.style.position = "absolute";
+        mount.style.inset = "0";
+        mount.style.width = "100%";
+        mount.style.height = "100%";
+        container.appendChild(mount);
         instance = createYouTubePlayer(mount, {
           videoId,
           startSeconds: startOffsetMs / 1000,
           onReady: () => {
             if (disposed) return;
+            fitPlayerFrame(container);
             try {
               instance?.setPlaybackRate(1);
             } catch {
@@ -134,6 +142,7 @@ export function useClipPlayerController(args: {
           },
         });
         playerRef.current = instance;
+        fitPlayerFrame(container);
       })
       .catch((err: unknown) => {
         if (disposed) return;
