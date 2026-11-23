@@ -59,17 +59,18 @@ Các bước:
 **Done khi:** đi hết loop 1 câu với clip thật; mọi lần "nghe đoạn đó" trúng đúng span; không nhìn chữ trước khi qua gist gate; dùng được trên điện thoại (375px).
 → Đạt: đi trọn loop câu `sent-02` clip thật `clip-ted-01` (nghe mù → mổ xẻ → giải mã → nghe lại → đóng hồ sơ). "Nghe đoạn đó" đo được: con trỏ băng wrap về đúng 4.97% (= `span[0]−1s` = 2982ms) và giữ trong `[2982, 5682]` = span ±1s. Màn NGHE MÙ không render transcript — chỉ mở sau gist gate. 375/768/1280px không tràn ngang; mọi touch target ≥ 40px; cụm highlight hiện sẵn (không hover-only). Event ghi đủ 4 loại + 2 manh mối vào localStorage.
 
-## GĐ4 — Seed content `[ ]` (T1.5)
+## GĐ4 — Seed content `[x]` (T1.5)
 
 **Đầu ra:** 5 clip L1–L5 đã annotate; 1 vụ nhỏ (3 clip) + 1 boss.
 
-- [ ] Research danh sách nguồn theo bậc thang (tech → series → gaming → phim → stream) → **user duyệt**
-- [ ] Transcribe + annotate 2–3 cụm/câu (curated)
-- [ ] Gom thành 1 vụ nhỏ (3 clip manh mối liên hoàn) + 1 boss full speed
-- [ ] Gist question + comprehension MCQ cho từng clip
-- [ ] Song ngữ cho câu hỏi nội dung (gist/comprehension) — hiện `MultipleChoice` chỉ có 1 chuỗi, đổi lang UI không đổi câu hỏi (phát hiện khi QA GĐ3 ở EN)
+- [x] Research danh sách nguồn theo bậc thang (tech → series → gaming → phim → stream) → **user duyệt**
+- [x] Transcribe + annotate 2–3 cụm/câu (curated)
+- [x] Gom thành 1 vụ nhỏ (3 clip manh mối liên hoàn) + 1 boss full speed
+- [x] Gist question + comprehension MCQ cho từng clip
+- [x] Song ngữ cho câu hỏi nội dung (gist/comprehension) — hiện `MultipleChoice` chỉ có 1 chuỗi, đổi lang UI không đổi câu hỏi (phát hiện khi QA GĐ3 ở EN)
 
 **Done khi:** user duyệt list nguồn; 5 clip chạy được trong micro-loop; vụ nhỏ + boss phá được theo ngưỡng SPEC §3.
+→ Đạt: user duyệt 5 nguồn + cách gom (LTT `f0KK_4AaqLQ` · B99 `AS38I3esj0o` · Skill Up `RFhRJaWtbYc` · A Few Good Men `9FnO3igOkOk` · GTA stream `sh-64G5jlic`). 5 clip annotate xong, `validate_clip.py` [final] pass: **62 câu · 118 cụm** · 5 gist + 15 comprehension (đúng 3/clip × 4 lựa chọn, song ngữ `{vi,en}`). Vụ nhỏ `case-gta-leak` "Bản build GTA 6 bị lộ" (L1+L2+L3, manh mối liên hoàn) + boss `case-boss-stream` "Ai là nội gián?" (L5, full speed, nói chồng) trong `src/data/seed/gd4Seed.ts`; clip lẻ L4 (AFJM) để luyện + ứng viên kỳ sát hạch. `MultipleChoice` đã `{vi,en}` từ types/UI (GĐ3) — QA toggle EN đổi câu hỏi theo lang. `npm run build` pass; đi trọn loop clip L1 trên UI thật (nghe mù → gist gate → mổ xẻ → giải mã cleanForms), 5/5 clip qua cổng nghe mù không lộ transcript, 375/768px OK. Ngưỡng phá vụ (vụ nhỏ ≥70% hiểu + ≥1 cụm/clip; boss ≥70% hiểu + ≥60% cụm) tính được từ `ClipProgress` — logic unlock để Case Board (GĐ5).
 
 ## GĐ5 — Game layer `[ ]` (T1.6)
 

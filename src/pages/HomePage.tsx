@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../lib/i18n";
+import { getSeedClip, seedCases } from "../data/seed";
 
 export function HomePage() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
 
   return (
     <main className="mx-auto max-w-6xl px-4 pb-20">
@@ -23,7 +24,7 @@ export function HomePage() {
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <Link
-            to="/clip/clip-ted-01"
+            to="/clip/clip-ltt-01"
             className="btn-amber rounded-sm px-5 py-2.5 text-sm"
           >
             {t("home.start")}
@@ -50,22 +51,67 @@ export function HomePage() {
           <div className="h-px flex-1 bg-[color-mix(in_srgb,var(--color-chalk)_14%,transparent)]" />
         </div>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-3">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="polaroid mx-auto w-full max-w-xs p-4 pb-8">
-              <div className="flex h-40 items-center justify-center border border-dashed border-black/25 bg-black/5">
-                <span className="font-brand text-xs tracking-[0.2em] text-black/45">
-                  EVIDENCE {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
-              <p className="mt-3 font-display text-sm text-black/80">
-                {t("home.caseFilesSoon")}
+        <div className="mt-10 space-y-10">
+          {seedCases.map((c) => (
+            <div key={c.id} className="polaroid mx-auto w-full max-w-2xl p-5 pb-8">
+              <p className="font-brand text-xs tracking-[0.25em] text-black/50">
+                {c.type === "boss"
+                  ? "BOSS"
+                  : `CASE · L${c.level}`}
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-black/55">
-                {t("home.caseFilesSoonSub")}
+              <h3 className="mt-2 font-display text-lg text-black/85">
+                {lang === "vi" ? c.titleVi : c.title}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-black/60">
+                {lang === "vi" ? c.synopsisVi : c.synopsis}
               </p>
+              <ul className="mt-4 space-y-2">
+                {c.clipIds.map((id) => {
+                  const clip = getSeedClip(id);
+                  if (!clip) return null;
+                  return (
+                    <li key={id}>
+                      <Link
+                        to={`/clip/${id}`}
+                        className="inline-flex items-center gap-2 rounded-sm border border-black/15 px-3 py-2 text-sm text-black/80 transition-colors hover:border-black/40 hover:bg-black/5"
+                      >
+                        <span className="font-brand text-xs tracking-[0.15em] text-black/50">
+                          L{clip.level}
+                        </span>
+                        {clip.title}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           ))}
+
+          {getSeedClip("clip-afjm-01") && (
+            <div className="polaroid mx-auto w-full max-w-2xl p-5 pb-8">
+              <p className="font-brand text-xs tracking-[0.25em] text-black/50">
+                DRILL
+              </p>
+              <h3 className="mt-2 font-display text-lg text-black/85">
+                {lang === "vi"
+                  ? "Clip lẻ — luyện tập & kỳ sát hạch"
+                  : "Standalone — practice & exam drill"}
+              </h3>
+              <ul className="mt-4 space-y-2">
+                <li>
+                  <Link
+                    to="/clip/clip-afjm-01"
+                    className="inline-flex items-center gap-2 rounded-sm border border-black/15 px-3 py-2 text-sm text-black/80 transition-colors hover:border-black/40 hover:bg-black/5"
+                  >
+                    <span className="font-brand text-xs tracking-[0.15em] text-black/50">
+                      L4
+                    </span>
+                    {getSeedClip("clip-afjm-01")?.title}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </section>
     </main>
