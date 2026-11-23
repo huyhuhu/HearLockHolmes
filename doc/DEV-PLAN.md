@@ -72,17 +72,19 @@ Các bước:
 **Done khi:** user duyệt list nguồn; 5 clip chạy được trong micro-loop; vụ nhỏ + boss phá được theo ngưỡng SPEC §3.
 → Đạt: user duyệt 5 nguồn + cách gom (LTT `f0KK_4AaqLQ` · B99 `AS38I3esj0o` · Skill Up `RFhRJaWtbYc` · A Few Good Men `9FnO3igOkOk` · GTA stream `sh-64G5jlic`). 5 clip annotate xong, `validate_clip.py` [final] pass: **62 câu · 118 cụm** · 5 gist + 15 comprehension (đúng 3/clip × 4 lựa chọn, song ngữ `{vi,en}`). Vụ nhỏ `case-gta-leak` "Bản build GTA 6 bị lộ" (L1+L2+L3, manh mối liên hoàn) + boss `case-boss-stream` "Ai là nội gián?" (L5, full speed, nói chồng) trong `src/data/seed/gd4Seed.ts`; clip lẻ L4 (AFJM) để luyện + ứng viên kỳ sát hạch. `MultipleChoice` đã `{vi,en}` từ types/UI (GĐ3) — QA toggle EN đổi câu hỏi theo lang. `npm run build` pass; đi trọn loop clip L1 trên UI thật (nghe mù → gist gate → mổ xẻ → giải mã cleanForms), 5/5 clip qua cổng nghe mù không lộ transcript, 375/768px OK. Ngưỡng phá vụ (vụ nhỏ ≥70% hiểu + ≥1 cụm/clip; boss ≥70% hiểu + ≥60% cụm) tính được từ `ClipProgress` — logic unlock để Case Board (GĐ5).
 
-## GĐ5 — Game layer `[ ]` (T1.6)
+## GĐ5 — Game layer `[x]` (T1.6)
 
-**Đầu ra:** nhân vật, rank/XP, Case Board, nhiệm vụ ngày, kỳ sát hạch.
+**Đầu ra:** nhân vật, rank/XP, Case Board, nhiệm vụ ngày, kỳ sát hạch. *(Mở rộng theo yêu cầu user: trợ thủ Wren role-play, hệ thống level + ~35 thành tựu lên cấp thường xuyên, hiệu ứng mọi trang/popup, SVG minh hoạ.)*
 
-- [ ] Tạo thám tử: tên + chọn 1/6 chân dung noir (imagegen) + archetype + hồ sơ flavor
-- [ ] XP/rank theo bảng SPEC; lưu `users/{uid}` (hoặc localStorage khi chưa auth)
-- [ ] Case Board: danh sách vụ nhỏ + boss, trạng thái manh mối, mở khóa khi đủ điều kiện
-- [ ] Nhiệm vụ ngày: 3/ngày, không streak, +XP nhẹ
-- [ ] Kỳ sát hạch lên rank (đoạn full speed không phụ đề, đạt ngưỡng)
+- [x] Tạo thám tử: tên + chọn 1/6 chân dung noir **SVG** + archetype + motto flavor (wizard 3 bước `/onboard`)
+- [x] XP/rank theo bảng SPEC + **Level 1→∞** (curve `100+40×(L−1)`) + **37 thành tựu**; lưu localStorage khi chưa auth (idempotent key — chỉ tính XP lần đầu)
+- [x] Case Board: vụ nhỏ + boss + drill, % tiến độ + đèn trạng thái từng clip, boss khóa đến khi phá vụ nhỏ (click rung)
+- [x] Nhiệm vụ ngày: 3/ngày deterministic theo ngày, không streak, +10–20 XP, reset theo ngày local
+- [x] Kỳ sát hạch: `/exam` full speed không phụ đề (L4 cho veteran, L5 cho legend), ≥70% phong hàm, lưu ExamRecord
+- [x] Trợ thủ Wren (SVG animate) + toast/level-up modal/stamp/panel đều có hiệu ứng; stagger entrance mọi list; StageRail pop khi đổi tab
 
-**Done khi:** tạo được thám tử, thấy rank/XP tăng bởi hành vi học thật, phá 1 vụ nhỏ + 1 boss, nhiệm vụ ngày chạy và reset theo ngày.
+**Done khi:** tạo được thám tử, thấy rank/XP/level tăng bởi hành vi học thật, phá 1 vụ nhỏ + 1 boss, nhiệm vụ ngày chạy và reset theo ngày.
+→ Đạt (QA Playwright 375/768/1280, cả 2 theme + 2 lang): onboard 3 bước tạo "Ace" → achievement "Nhập môn" +20 XP tự unlock; đi loop clip `clip-ltt-01`: gist trúng +12 XP nhiệm vụ ngày "Lắng nghe lời khai", giải mã 2 cụm +30 XP + achievement "Dấu vân tay", hiểu nghĩa 100% +30 XP + "Bản tường trình hoàn hảo" → **LV 2 · 132 XP** với modal "LÊN CẤP" + 3 toast xếp lớp. Case Board hiện % thật (19% vụ nhỏ), boss có khóa + ghi điều kiện. Exam siết ngưỡng ≥1500 XP (nút mờ khi thiếu). Daily 1/3 sau 1 gist. 375px: nav 2 hàng, touch target ≥40px; light theme "văn phòng" + EN đổi toàn bộ copy. `npm run build` pass.
 
 ## GĐ6 — Cá nhân hóa + polish `[ ]` (T1.7)
 

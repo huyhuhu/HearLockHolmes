@@ -29,7 +29,7 @@ Quy tắc: clip ngắn **30–90 giây**; timestamp cấp độ **TỪ** (word-l
 | Xác minh mổ xẻ | **Chọn dạng sạch** của câu (3–4 lựa chọn gần nhau) + 3 câu hiểu nghĩa MCQ |
 | UI language | **Song ngữ VI/EN**, toggle nhanh trên top bar. Audio/transcript luôn tiếng Anh; câu hỏi nội dung (gist/comprehension) + note cụm có `{vi,en}` — đổi lang UI thì nội dung đổi theo |
 | Theme | Toggle sáng/tối trên top bar. Mặc định **noir đêm** (chàm đen + hổ phách); sáng = **"ban ngày tại văn phòng"** (giấy ngả vàng, mực đen) — không phải light theme mặc định |
-| Avatar | **6 chân dung noir** (imagegen, sinh 1 lần) + archetype (cựu cảnh sát / phóng viên điều tra / chuyên gia giám định âm thanh / thám tử tư / hacker mũ xám / nhà báo) |
+| Avatar | **6 chân dung noir SVG** vẽ tay (animate được, theme được — thay imagegen) + archetype (cựu cảnh sát / phóng viên điều tra / chuyên gia giám định âm thanh / thám tử tư / hacker mũ xám / nhà báo) |
 | Firebase | Scaffold đọc config từ `.env.local`. MVP chạy **local**; Firebase Hosting khi nào muốn. README có các bước bật Google Sign-in |
 | Seed content | Agent research & seed 5 clip L1→L5 theo bậc thang; **user duyệt danh sách nguồn trước khi chốt** |
 
@@ -52,6 +52,28 @@ Quy tắc: clip ngắn **30–90 giây**; timestamp cấp độ **TỪ** (word-l
 ### Rank — thăng theo nghe THẬT
 `Thám tử tập sự` → `Thám tử kỳ cựu` (≥1500 XP) → `Thám tử lừng danh` (≥4000 XP).
 Mỗi lần lên rank phải qua **kỳ sát hạch**: 1 đoạn full speed không phụ đề, đạt ngưỡng mới phong hàm.
+
+### Level (cấp điều tra) — nhịp phản hồi nhanh *(GĐ5)*
+Rank chỉ có 3 bậc nên thêm **Level 1→∞** (không kèm sát hạch) làm nhịp "lên cấp thường xuyên":
+mỗi cấp cần `100 + 40×(cấp−1)` XP (L2=100 · L3=+140 · L4=+180…).
+1 clip giải mã trọn ≈ 250–350 XP → lên 1–2 cấp/bài học. Level hiển thị ở top bar + hồ sơ; rank vẫn là hàm danh.
+
+### Thành tựu (Achievements) *(GĐ5)*
+~35 huy hiệu 5 nhánh: nhập môn · sản lượng · bá chủ 5 loại âm · kỹ năng · vụ án/sát hạch · level/nhật ký.
+Mỗi thành tựu +10–30 XP (key idempotent `ach:{id}` — chỉ tính 1 lần). Huy hiệu SVG noir, unlock có toast + stamp.
+
+### Trợ thủ Wren *(GĐ5)*
+Đồng hành role-play: quạ Wren (SVG, animate nhẹ) gợi mẹo theo ngữ cảnh (nghe mù, giải mã trượt,
+nhiệm vụ ngày, lên cấp…). Giọng nói gọi người học là **"Thám tử"**. Không chat AI — message đóng khung sẵn.
+
+### Chân dung thám tử
+**6 chân dung noir vẽ tay bằng SVG** (không imagegen — theme được cả sáng/tối, animate được, nhẹ):
+cựu cảnh sát · phóng viên điều tra · chuyên gia giám định âm thanh · thám tử tư · hacker mũ xám · nhà báo.
+Chọn thêm archetype (6) + tên + motto flavor khi tạo hồ sơ.
+
+### Mở khóa Case Board
+Clip lẻ luôn mở (không chặn việc học). **Boss bị khóa** đến khi phá được vụ nhỏ liên quan
+(trạng thái khóa có hiệu ứng, click rung — không hardcode thắng, điều kiện tính từ `ClipProgress`).
 
 ### Nhiệm vụ ngày (Daily Investigation)
 3 chiếc/ngày (vd: "lắng nghe 3 lời khai", "giải mã 5 đoạn nối âm"). **Không streak, không phạt nghỉ** — chỉ là nhật ký điều tra.
