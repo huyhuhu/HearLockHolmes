@@ -9,6 +9,7 @@ const fixtureClip = {
   caseId: "case-fixture",
   videoId: "dQw4w9WgXcQ",
   youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  startOffsetMs: 0,
   title: "Fixture — phone call (reduced speech)",
   durationSec: 45,
   level: 3,

@@ -57,6 +57,8 @@ export interface Clip {
   caseId: string;
   videoId: string;
   youtubeUrl: string;
+  /** vị trí clip trong video gốc (ms) — 0 nếu clip = cả video. Player seek tới startOffsetMs + t */
+  startOffsetMs: number;
   title: string;
   durationSec: number;
   level: DifficultyLevel;

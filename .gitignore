@@ -5,3 +5,8 @@ dist
 *.log
 .DS_Store
 .playwright-cli
+
+# tools (GĐ2 pipeline)
+tools/.venv
+tools/out
+tools/.models

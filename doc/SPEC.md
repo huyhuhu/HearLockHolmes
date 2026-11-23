@@ -85,7 +85,7 @@ Mọi GĐ có UI đều phải kiểm tra ở **375px / 768px / desktop** trư�
 ```
 # SYSTEM CONTENT — public read, admin write
 cases/{caseId}   { title, titleVi, level, type: 'small'|'boss', clipIds[], synopsis }
-clips/{clipId}   { caseId, videoId, youtubeUrl, title, durationSec, level, category,
+clips/{clipId}   { caseId, videoId, youtubeUrl, startOffsetMs, title, durationSec, level, category,
                    gistQuestion { prompt, choices[4], answerIndex },
                    comprehension[{ question, choices[4], answerIndex }],
                    sentences[{ id, text, startMs, endMs,
@@ -101,6 +101,10 @@ users/{uid}/events/{id}    { type: replay|seek|decode_hit|decode_miss|self_fuzzy
 users/{uid}/daily/{date}   { missions[{ id, type, target, done, rewardXp }] }
 users/{uid}/exams/{rank}   { passedAt, score }
 ```
+
+Toạ độ thời gian: `startMs/endMs`, `words[].s/e`, `span` là **ms tính từ đầu clip** (đoạn 30–90s đã cắt);
+`startOffsetMs` = vị trí clip trong video gốc (0 nếu clip = cả video). Player YouTube seek tới
+`startOffsetMs + t`. Pipeline (`tools/transcribe.sh`) sinh đúng toạ độ này.
 
 ## 6. Nội dung — kho tư liệu điều tra
 
