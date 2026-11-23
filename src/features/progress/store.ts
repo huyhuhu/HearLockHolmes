@@ -107,6 +107,11 @@ export const progressStore = {
     return snap.progress[clipId] ?? { ...EMPTY_PROGRESS, decodedClusters: [] };
   },
 
+  /** Toàn bộ tiến độ — cho game layer tính stats/thành tựu */
+  getAllProgress(): Record<string, ClipProgress> {
+    return read().progress;
+  },
+
   upsertProgress(clipId: string, patch: Partial<ClipProgress>): ClipProgress {
     const snap = read();
     const current = snap.progress[clipId] ?? { ...EMPTY_PROGRESS, decodedClusters: [] };
