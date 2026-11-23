@@ -18,7 +18,7 @@ function ToggleButton({
       type="button"
       onClick={onClick}
       title={title}
-      className="btn-ghost min-h-9 rounded-sm px-3 py-1.5 text-xs"
+      className="btn-ghost min-h-11 rounded-sm px-3 py-1.5 text-xs"
     >
       {children}
     </button>
@@ -31,7 +31,7 @@ export function TopBar() {
   const { user, isFirebaseConfigured, signOutUser } = useAuth();
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `text-sm font-medium tracking-wide whitespace-nowrap transition-colors ${
+    `inline-flex min-h-11 items-center text-sm font-medium tracking-wide whitespace-nowrap transition-colors ${
       isActive
         ? "text-[var(--color-amber)] underline decoration-dotted underline-offset-4"
         : "text-[var(--color-smoke)] hover:text-[var(--color-chalk)]"
@@ -40,7 +40,7 @@ export function TopBar() {
   return (
     <header className="sticky top-0 z-50 border-b border-[color-mix(in_srgb,var(--color-chalk)_12%,transparent)] bg-[color-mix(in_srgb,var(--color-ink)_88%,transparent)] backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-        <Link to="/" className="group shrink-0">
+        <Link to="/" className="group inline-flex min-h-11 shrink-0 flex-col justify-center">
           <div className="neon-text font-brand text-lg leading-none tracking-widest">
             HEARLOCK
           </div>
@@ -87,7 +87,7 @@ export function TopBar() {
               <button
                 type="button"
                 onClick={() => void signOutUser()}
-                className="btn-ghost min-h-9 rounded-sm px-3 py-1.5 text-xs"
+                className="btn-ghost min-h-11 rounded-sm px-3 py-1.5 text-xs"
               >
                 {t("auth.logout")}
               </button>
@@ -95,7 +95,7 @@ export function TopBar() {
           ) : isFirebaseConfigured ? (
             <Link
               to="/login"
-              className="btn-amber flex min-h-9 items-center rounded-sm px-3 py-1.5 text-xs"
+              className="btn-amber flex min-h-11 items-center rounded-sm px-3 py-1.5 text-xs"
             >
               {t("auth.login")}
             </Link>

@@ -43,20 +43,21 @@ Các bước:
 **Done khi:** 1 clip ra JSON đúng schema; word timestamps khớp audio ±300ms ở câu thường.
 → Đạt: scaffold validate pass (`tools/validate_clip.py --scaffold`); |lệch| trung vị 33ms so onset thật, 14/16 câu trong ±300ms; đo 3 cụm bị nuốt tại `tools/samples/clip-ted-01.timestamp-report.txt`.
 
-## GĐ3 — Micro-loop học `[ ]` (T1.4) ★ trái tim
+## GĐ3 — Micro-loop học `[x]` (T1.4) ★ trái tim
 
 **Đầu ra:** đi được 1 câu thoại trọn loop: nghe mù → gist gate → mổ xẻ → chọn dạng sạch → nghe lại.
 
-- [ ] Player YouTube IFrame wrapper: seek tới timestamp, A–B loop (seek+timer), playbackRate 0.75/1.0/1.25
-- [ ] Waveform animated (bằng chứng sống) + controls kiểu máy băng từ
-- [ ] Màn NGHE MÙ: không chữ, chỉ player + câu hỏi hiện trường (gist MCQ) mở khóa
-- [ ] Màn MỔ XẺ: transcript từng câu, highlight 2–3 cụm, click cụm → play đúng đoạn ±1s
-- [ ] Nhiệm vụ GIẢI MÃ: chọn dạng sạch (3–4 lựa chọn) + 3 câu hiểu nghĩa MCQ
-- [ ] Màn NGHE LẠI: phát lại full câu + ghi manh mối (ghi local trước, Firestore sau)
-- [ ] Ghi event: replay, seek, decode_hit/miss, self_fuzzy
-- [ ] Responsive: kiểm tra micro-loop ở 375px / 768px — controls bấm được bằng ngón cái, không hover-only
+- [x] Player YouTube IFrame wrapper: seek tới timestamp, A–B loop (seek+timer), playbackRate 0.75/1.0/1.25
+- [x] Waveform animated (bằng chứng sống) + controls kiểu máy băng từ
+- [x] Màn NGHE MÙ: không chữ, chỉ player + câu hỏi hiện trường (gist MCQ) mở khóa
+- [x] Màn MỔ XẺ: transcript từng câu, highlight 2–3 cụm, click cụm → play đúng đoạn ±1s
+- [x] Nhiệm vụ GIẢI MÃ: chọn dạng sạch (3–4 lựa chọn) + 3 câu hiểu nghĩa MCQ
+- [x] Màn NGHE LẠI: phát lại full câu + ghi manh mối (ghi local trước, Firestore sau)
+- [x] Ghi event: replay, seek, decode_hit/miss, self_fuzzy
+- [x] Responsive: kiểm tra micro-loop ở 375px / 768px — controls bấm được bằng ngón cái, không hover-only
 
 **Done khi:** đi hết loop 1 câu với clip thật; mọi lần "nghe đoạn đó" trúng đúng span; không nhìn chữ trước khi qua gist gate; dùng được trên điện thoại (375px).
+→ Đạt: đi trọn loop câu `sent-02` clip thật `clip-ted-01` (nghe mù → mổ xẻ → giải mã → nghe lại → đóng hồ sơ). "Nghe đoạn đó" đo được: con trỏ băng wrap về đúng 4.97% (= `span[0]−1s` = 2982ms) và giữ trong `[2982, 5682]` = span ±1s. Màn NGHE MÙ không render transcript — chỉ mở sau gist gate. 375/768/1280px không tràn ngang; mọi touch target ≥ 40px; cụm highlight hiện sẵn (không hover-only). Event ghi đủ 4 loại + 2 manh mối vào localStorage.
 
 ## GĐ4 — Seed content `[ ]` (T1.5)
 
@@ -66,6 +67,7 @@ Các bước:
 - [ ] Transcribe + annotate 2–3 cụm/câu (curated)
 - [ ] Gom thành 1 vụ nhỏ (3 clip manh mối liên hoàn) + 1 boss full speed
 - [ ] Gist question + comprehension MCQ cho từng clip
+- [ ] Song ngữ cho câu hỏi nội dung (gist/comprehension) — hiện `MultipleChoice` chỉ có 1 chuỗi, đổi lang UI không đổi câu hỏi (phát hiện khi QA GĐ3 ở EN)
 
 **Done khi:** user duyệt list nguồn; 5 clip chạy được trong micro-loop; vụ nhỏ + boss phá được theo ngưỡng SPEC §3.
 
