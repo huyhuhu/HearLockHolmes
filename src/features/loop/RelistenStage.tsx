@@ -62,15 +62,10 @@ export function RelistenStage({
         onNext={() =>
           onSentenceIndex(Math.min(clip.sentences.length - 1, sentenceIndex + 1))
         }
-        extra={
-          <button
-            type="button"
-            onClick={onJumpClusters}
-            className="btn-ghost min-h-11 rounded-sm px-3 py-2 text-xs"
-          >
-            {t("loop.nav.jumpClusters")}
-          </button>
-        }
+        onPlay={() => {
+          api.playSpan(sentence.startMs, sentence.endMs, { loop: false });
+          progressStore.recordEvent({ type: "replay", clipId: clip.id });
+        }}
       />
 
       <SectionCard>
@@ -88,43 +83,35 @@ export function RelistenStage({
               category: cluster.category,
             });
           }}
-          onSentenceTap={() => {
-            api.playSpan(sentence.startMs, sentence.endMs);
-            progressStore.recordEvent({ type: "replay", clipId: clip.id });
-          }}
         />
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => {
-              api.playSpan(sentence.startMs, sentence.endMs);
-              progressStore.recordEvent({ type: "replay", clipId: clip.id });
-            }}
-            className="btn-amber min-h-11 flex-1 rounded-sm px-4 py-2.5 text-xs"
-          >
-            ▶ {t("loop.relisten.playSentence")}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onToggleFuzzy(sentence.id)}
-            className={`min-h-11 flex-1 rounded-sm border px-4 py-2.5 text-xs transition-colors ${
-              isFuzzy
-                ? "border-[var(--color-neon)] bg-[color-mix(in_srgb,var(--color-neon)_16%,transparent)] text-[var(--color-chalk)]"
-                : "border-[color-mix(in_srgb,var(--color-chalk)_24%,transparent)] text-[var(--color-chalk)]"
-            }`}
-          >
-            {isFuzzy ? `✓ ${t("loop.relisten.fuzzy")}` : t("loop.relisten.fuzzy")}
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => onToggleFuzzy(sentence.id)}
+          className={`mt-4 min-h-11 w-full rounded-sm border px-4 py-2.5 text-xs transition-colors ${
+            isFuzzy
+              ? "border-[var(--color-neon)] bg-[color-mix(in_srgb,var(--color-neon)_16%,transparent)] text-[var(--color-chalk)]"
+              : "border-[color-mix(in_srgb,var(--color-chalk)_24%,transparent)] text-[var(--color-chalk)]"
+          }`}
+        >
+          {isFuzzy ? `✓ ${t("loop.relisten.fuzzy")}` : t("loop.relisten.fuzzy")}
+        </button>
       </SectionCard>
 
       <SectionCard title={t("loop.relisten.save")} tone="paper">
         {sentence.clusters.length === 0 ? (
-          <p className="text-sm text-[var(--color-smoke)]">
-            {t("loop.relisten.noClusters")}
-          </p>
+          <>
+            <p className="text-sm text-[var(--color-smoke)]">
+              {t("loop.relisten.noClusters")}
+            </p>
+            <button
+              type="button"
+              onClick={onJumpClusters}
+              className="btn-ghost mt-3 min-h-11 rounded-sm px-4 py-2.5 text-sm"
+            >
+              {t("loop.nav.jumpClusters")}
+            </button>
+          </>
         ) : (
           <>
             <ul className="mb-4 flex flex-col gap-2">

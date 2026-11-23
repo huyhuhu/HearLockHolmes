@@ -1,8 +1,12 @@
 /**
- * Băng máy phát: khung video YouTube + sóng âm + điều khiển kiểu máy băng từ.
- * Nút ≥ 40px, không hover-only — học trên điện thoại (SPEC §4).
+ * Băng máy phát: khung video YouTube + sóng âm + điều khiển.
+ *
+ * Công thái học (SPEC §4 + rule dự án):
+ * - Ít nút, mỗi hàng 2–3 control; label tự giải thích (bỏ chữ "TỐC ĐỘ").
+ * - Bỏ đánh dấu A thủ công — A–B tự chạy khi chạm cụm, không cần thêm nút.
+ * - Thanh điều khiển nổi đáy trên mobile: dừng/tiếp luôn trong tầm ngón cái.
  */
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 import { useI18n } from "../../lib/i18n";
 import type { Sentence } from "../../types/content";
 import {
@@ -35,7 +39,7 @@ function Waveform({
   return (
     <div
       aria-label={t("player.waveform")}
-      className="relative mt-3 h-14 overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-chalk)_16%,transparent)] bg-[color-mix(in_srgb,var(--color-void)_70%,transparent)] px-2"
+      className="relative mt-3 h-12 overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-chalk)_16%,transparent)] bg-[color-mix(in_srgb,var(--color-void)_70%,transparent)] px-2"
     >
       <div className="flex h-full items-end gap-[2px]">
         {bins.map((height, i) => {
@@ -62,7 +66,6 @@ function Waveform({
         })}
       </div>
 
-      {/* con trỏ băng */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-y-0 w-px bg-[var(--color-neon-soft)]"
@@ -73,10 +76,9 @@ function Waveform({
         type="button"
         onClick={(e) => {
           const rect = e.currentTarget.getBoundingClientRect();
-          const ratio = (e.clientX - rect.left) / rect.width;
-          api.seekMs(ratio * durationMs);
+          api.seekMs(((e.clientX - rect.left) / rect.width) * durationMs);
         }}
-        className="absolute inset-0 h-full w-full cursor-pointer"
+        className="absolute inset-0 h-full w-full"
         aria-label={t("player.waveform")}
       />
     </div>
@@ -90,6 +92,7 @@ function DeckButton({
   title,
   children,
   wide,
+  tone = "ghost",
 }: {
   onClick: () => void;
   active?: boolean;
@@ -97,6 +100,7 @@ function DeckButton({
   title?: string;
   children: ReactNode;
   wide?: boolean;
+  tone?: "ghost" | "amber";
 }) {
   return (
     <button
@@ -104,9 +108,9 @@ function DeckButton({
       title={title}
       disabled={disabled}
       onClick={onClick}
-      className={`btn-ghost flex min-h-11 items-center justify-center gap-1.5 rounded-sm px-3 py-2 text-xs disabled:opacity-40 ${
-        wide ? "flex-1" : ""
-      } ${
+      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-sm px-3 py-2 text-xs disabled:opacity-40 ${
+        tone === "amber" ? "btn-amber" : "btn-ghost"
+      } ${wide ? "flex-1" : ""} ${
         active
           ? "border-[var(--color-amber)] bg-[color-mix(in_srgb,var(--color-amber)_18%,transparent)] text-[var(--color-amber)]"
           : ""
@@ -117,6 +121,51 @@ function DeckButton({
   );
 }
 
+/** Nút phát/dừng — dùng chung cho deck và thanh đáy */
+function PlayButton({ wide }: { wide?: boolean }) {
+  const { t } = useI18n();
+  const { api, view } = useClipPlayer();
+  return (
+    <DeckButton onClick={() => api.toggle()} active={view.playing} wide={wide} tone="amber">
+      {view.playing ? (
+        <>
+          <span aria-hidden>❚❚</span> {t("player.pause")}
+        </>
+      ) : (
+        <>
+          <span aria-hidden>▶</span> {t("player.play")}
+        </>
+      )}
+    </DeckButton>
+  );
+}
+
+function ReplayButton({ wide }: { wide?: boolean }) {
+  const { t } = useI18n();
+  const { api, view } = useClipPlayer();
+  return (
+    <DeckButton
+      onClick={() => {
+        if (view.loop) api.playSpan(view.loop.startMs, view.loop.endMs);
+        else {
+          api.seekMs(0);
+          api.play();
+        }
+      }}
+      wide={wide}
+    >
+      <span aria-hidden>⟲</span> {t("player.replay")}
+    </DeckButton>
+  );
+}
+
+function ClearLoopButton() {
+  const { t } = useI18n();
+  const { api, view } = useClipPlayer();
+  if (!view.loop) return null;
+  return <DeckButton onClick={() => api.clearLoop()}>{t("player.abClear")}</DeckButton>;
+}
+
 export function PlayerPanel({
   sentences,
   durationMs,
@@ -124,106 +173,72 @@ export function PlayerPanel({
   sentences: Sentence[];
   durationMs: number;
 }) {
-  const { t } = useI18n();
-  const { containerRef, api, view, getTimeMs } = useClipPlayer();
-  const [markAMs, setMarkAMs] = useState<number | null>(null);
-
-  // đang có vòng A–B thì dấu A thủ công không còn ý nghĩa
-  useEffect(() => {
-    if (view.loop) setMarkAMs(null);
-  }, [view.loop]);
+  const { view, api, containerRef } = useClipPlayer();
 
   return (
-    <section className="lg:sticky lg:top-24">
-      <div className="overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-chalk)_18%,transparent)] bg-[var(--color-ink-2)] shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
-        <div className="relative aspect-video w-full overflow-hidden bg-black">
-          <div ref={containerRef} className="absolute inset-0" />
-          {view.status !== "ready" ? (
-            <div className="absolute inset-0 z-10 flex items-center justify-center px-6 text-center text-sm text-[var(--color-smoke)]">
-              {view.status === "loading" ? t("player.loading") : t("player.error")}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="px-3 pb-3 pt-1">
-          <Waveform sentences={sentences} durationMs={durationMs} />
-
-          {/* máy băng từ — 2 hàng trên phone, vừa ngón cái */}
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <DeckButton onClick={() => api.toggle()} active={view.playing} wide>
-              {view.playing ? (
-                <>
-                  <span aria-hidden>❚❚</span> {t("player.pause")}
-                </>
-              ) : (
-                <>
-                  <span aria-hidden>▶</span> {t("player.play")}
-                </>
-              )}
-            </DeckButton>
-
-            <DeckButton
-              onClick={() => {
-                if (view.loop) api.playSpan(view.loop.startMs, view.loop.endMs);
-                else {
-                  api.seekMs(0);
-                  api.play();
-                }
-              }}
-              wide
-            >
-              <span aria-hidden>⟲</span> {t("player.replay")}
-            </DeckButton>
+    <>
+      <section className="lg:sticky lg:top-24">
+        <div className="overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-chalk)_18%,transparent)] bg-[var(--color-ink-2)] shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
+          <div className="relative aspect-video w-full overflow-hidden bg-black">
+            <div ref={containerRef} className="absolute inset-0" />
+            {view.status !== "ready" ? (
+              <PlayerStatusOverlay />
+            ) : null}
           </div>
 
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.22em] text-[var(--color-smoke)]">
-              {t("player.rate")}
-            </span>
-            {RATES.map((r: Rate) => (
-              <DeckButton
-                key={r}
-                onClick={() => api.setRate(r)}
-                active={view.rate === r}
-                title={`${t("player.rate")} ${r}×`}
-              >
-                {r}×
-              </DeckButton>
-            ))}
+          <div className="px-3 pb-3 pt-1">
+            <Waveform sentences={sentences} durationMs={durationMs} />
 
-            <div className="ml-auto flex items-center gap-2">
-              {view.loop ? (
-                <>
-                  <span className="text-[10px] uppercase tracking-[0.18em] text-[var(--color-amber)]">
-                    {t("player.abActive")}
-                  </span>
-                  <DeckButton onClick={() => api.clearLoop()}>
-                    {t("player.abClear")}
-                  </DeckButton>
-                </>
-              ) : (
+            {/* máy băng — gọn: 2 nút chính, tốc độ là 1 cụm chip */}
+            <div className="mt-3 flex items-center gap-2">
+              <PlayButton wide />
+              <ReplayButton wide />
+            </div>
+
+            <div className="mt-2 flex items-center gap-1.5">
+              {RATES.map((r: Rate) => (
                 <DeckButton
-                  onClick={() => {
-                    const now = getTimeMs();
-                    if (markAMs === null) {
-                      setMarkAMs(now);
-                      return;
-                    }
-                    if (now > markAMs + 200) {
-                      api.playSpan(markAMs, now);
-                    }
-                    setMarkAMs(null);
-                  }}
-                  active={markAMs !== null}
-                  title={t("player.abMark")}
+                  key={r}
+                  onClick={() => api.setRate(r)}
+                  active={view.rate === r}
+                  title={`${r}×`}
                 >
-                  {markAMs === null ? t("player.abSetA") : t("player.abSetB")}
+                  {r}×
                 </DeckButton>
-              )}
+              ))}
+              <div className="ml-auto flex items-center gap-2">
+                {view.loop ? (
+                  <>
+                    <span className="text-[10px] uppercase tracking-[0.16em] text-[var(--color-amber)]">
+                      A–B
+                    </span>
+                    <ClearLoopButton />
+                  </>
+                ) : null}
+              </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* thanh điều khiển nổi đáy — mobile/tablet, trong tầm ngón cái */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[color-mix(in_srgb,var(--color-chalk)_16%,transparent)] bg-[color-mix(in_srgb,var(--color-ink)_94%,transparent)] px-3 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-2 backdrop-blur-sm lg:hidden">
+        <div className="mx-auto flex max-w-6xl items-center gap-2">
+          <PlayButton wide />
+          <ReplayButton />
+          <ClearLoopButton />
         </div>
       </div>
-    </section>
+    </>
+  );
+}
+
+function PlayerStatusOverlay() {
+  const { t } = useI18n();
+  const { view } = useClipPlayer();
+  return (
+    <div className="absolute inset-0 z-10 flex items-center justify-center px-6 text-center text-sm text-[var(--color-smoke)]">
+      {view.status === "loading" ? t("player.loading") : t("player.error")}
+    </div>
   );
 }

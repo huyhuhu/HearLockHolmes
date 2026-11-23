@@ -25,7 +25,7 @@ export function ClipPage() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-20 pt-8">
+    <main className="mx-auto max-w-6xl px-4 pb-32 pt-8 lg:pb-20">
       <header className="mb-6 flex flex-col gap-2">
         <p className="font-brand text-[11px] tracking-[0.32em] text-[var(--color-smoke)]">
           {t("clip.eyebrow")} — LEVEL {clip.level}

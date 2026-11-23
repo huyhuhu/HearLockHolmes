@@ -75,15 +75,10 @@ export function DecodeStage({
         onNext={() =>
           onSentenceIndex(Math.min(clip.sentences.length - 1, sentenceIndex + 1))
         }
-        extra={
-          <button
-            type="button"
-            onClick={onJumpClusters}
-            className="btn-ghost min-h-11 rounded-sm px-3 py-2 text-xs"
-          >
-            {t("loop.nav.jumpClusters")}
-          </button>
-        }
+        onPlay={() => {
+          api.playSpan(sentence.startMs, sentence.endMs, { loop: false });
+          progressStore.recordEvent({ type: "replay", clipId: clip.id });
+        }}
       />
 
       {sentence.clusters.length === 0 ? (
@@ -91,6 +86,13 @@ export function DecodeStage({
           <p className="text-sm text-[var(--color-smoke)]">
             {t("loop.dissect.noClusters")}
           </p>
+          <button
+            type="button"
+            onClick={onJumpClusters}
+            className="btn-ghost mt-3 min-h-11 rounded-sm px-4 py-2.5 text-sm"
+          >
+            {t("loop.nav.jumpClusters")}
+          </button>
         </SectionCard>
       ) : (
         sentence.clusters.map((cluster) => {

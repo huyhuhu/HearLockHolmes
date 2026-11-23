@@ -81,15 +81,11 @@ export function DissectStage({
           onActiveCluster(null);
           onSentenceIndex(Math.min(clip.sentences.length - 1, sentenceIndex + 1));
         }}
-        extra={
-          <button
-            type="button"
-            onClick={onJumpClusters}
-            className="btn-ghost min-h-11 rounded-sm px-3 py-2 text-xs"
-          >
-            {t("loop.nav.jumpClusters")}
-          </button>
-        }
+        onPlay={() => {
+          onActiveCluster(null);
+          api.playSpan(sentence.startMs, sentence.endMs, { loop: false });
+          progressStore.recordEvent({ type: "replay", clipId: clip.id });
+        }}
       />
 
       <SectionCard>
@@ -97,11 +93,6 @@ export function DissectStage({
           sentence={sentence}
           activeClusterId={activeClusterId}
           onClusterTap={playCluster}
-          onSentenceTap={() => {
-            onActiveCluster(null);
-            api.playSpan(sentence.startMs, sentence.endMs);
-            progressStore.recordEvent({ type: "replay", clipId: clip.id });
-          }}
         />
       </SectionCard>
 
@@ -119,6 +110,13 @@ export function DissectStage({
             <p className="w-full text-sm text-[var(--color-smoke)]">
               {t("loop.dissect.noClusters")}
             </p>
+            <button
+              type="button"
+              onClick={onJumpClusters}
+              className="btn-ghost min-h-11 rounded-sm px-4 py-3 text-sm"
+            >
+              {t("loop.nav.jumpClusters")}
+            </button>
             <button
               type="button"
               onClick={onToRelisten}

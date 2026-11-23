@@ -45,18 +45,11 @@ export function BlindStage({
         onNext={() =>
           onSentenceIndex(Math.min(clip.sentences.length - 1, sentenceIndex + 1))
         }
-        extra={
-          <button
-            type="button"
-            onClick={() => {
-              if (!sentence) return;
-              api.playSpan(sentence.startMs, sentence.endMs);
-            }}
-            className="btn-amber min-h-11 rounded-sm px-4 py-2 text-xs"
-          >
-            ▶ {t("loop.dissect.playSentence")}
-          </button>
-        }
+        onPlay={() => {
+          if (!sentence) return;
+          // phát 1 lần rồi dừng — không lặp làm phiền
+          api.playSpan(sentence.startMs, sentence.endMs, { loop: false });
+        }}
       />
 
       <SectionCard title={t("loop.blind.gate")} tone="paper">

@@ -72,8 +72,10 @@ body {
   }
 }
 
+/* fill-mode "backwards" (không dùng "both"): nếu giữ transform sau animation thì
+   mọi position:fixed trong trang bị coi là con của div này và trôi khỏi viewport. */
 .page-enter {
-  animation: page-enter 220ms ease-out both;
+  animation: page-enter 220ms ease-out backwards;
 }
 
 /* Sống động = nhịp game lôi cuốn, không phải trang trí ồn ào.

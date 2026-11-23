@@ -34,8 +34,12 @@ export type ClipPlayerApi = {
   toggle(): void;
   /** seek tới mốc clip-relative */
   seekMs(ms: number): void;
-  /** phát [startMs, endMs] rồi lặp — dùng cho "nghe đoạn đó" ±1s */
-  playSpan(startMs: number, endMs: number): void;
+  /**
+   * Phát [startMs, endMs].
+   * - `loop: true` (mặc định) — lặp A–B: dành cho "nghe đoạn đó" ±1s.
+   * - `loop: false` — phát 1 lần rồi tự dừng ở endMs: dành cho "nghe cả câu".
+   */
+  playSpan(startMs: number, endMs: number, opts?: { loop?: boolean }): void;
   clearLoop(): void;
   setRate(rate: Rate): void;
 };
@@ -88,6 +92,8 @@ export function useClipPlayerController(args: {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<YTPlayerInstance | null>(null);
   const loopRef = useRef<LoopSpan | null>(null);
+  /** mốc dừng cho kiểu "phát 1 lần rồi dừng" */
+  const stopAtRef = useRef<number | null>(null);
   const rateRef = useRef<Rate>(1);
   const timeStore = useMemo(createTimeStore, []);
   const mountedRef = useRef(true);
@@ -154,6 +160,7 @@ export function useClipPlayerController(args: {
       disposed = true;
       playerRef.current = null;
       loopRef.current = null;
+      stopAtRef.current = null;
       try {
         instance?.destroy();
       } catch {
@@ -190,6 +197,19 @@ export function useClipPlayerController(args: {
         return;
       }
 
+      // phát 1 lần: chạm endMs thì dừng, không lặp
+      const stopAt = stopAtRef.current;
+      if (stopAt !== null && clipMs >= stopAt) {
+        stopAtRef.current = null;
+        try {
+          player.pauseVideo();
+        } catch {
+          /* player chưa sẵn sàng */
+        }
+        timeStore.set(stopAt);
+        return;
+      }
+
       timeStore.set(clipMs);
     }, TICK_MS);
     return () => window.clearInterval(id);
@@ -214,12 +234,21 @@ export function useClipPlayerController(args: {
         playerRef.current?.seekTo((startOffsetMs + clamped) / 1000, true);
         timeStore.set(clamped);
       },
-      playSpan(startMs: number, endMs: number) {
+      playSpan(startMs: number, endMs: number, opts?: { loop?: boolean }) {
         const a = Math.max(0, Math.min(clipDurationMs, startMs));
         const b = Math.max(a + 1, Math.min(clipDurationMs, endMs));
-        const span = { startMs: a, endMs: b };
-        loopRef.current = span;
-        setLoopState(span);
+        const shouldLoop = opts?.loop !== false;
+
+        if (shouldLoop) {
+          loopRef.current = { startMs: a, endMs: b };
+          stopAtRef.current = null;
+          setLoopState({ startMs: a, endMs: b });
+        } else {
+          loopRef.current = null;
+          stopAtRef.current = b;
+          setLoopState(null);
+        }
+
         const player = playerRef.current;
         if (!player) return;
         try {
@@ -233,6 +262,7 @@ export function useClipPlayerController(args: {
       },
       clearLoop() {
         loopRef.current = null;
+        stopAtRef.current = null;
         setLoopState(null);
       },
       setRate(next: Rate) {

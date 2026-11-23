@@ -24,25 +24,27 @@ export function StageRail({ stage }: { stage: Stage }) {
   const current = STAGE_ORDER.indexOf(stage);
 
   return (
-    <ol className="flex flex-wrap items-stretch gap-2">
+    <ol className="flex items-stretch gap-1.5">
       {STAGE_ORDER.map((key, i) => {
         const done = current > i || stage === "done";
         const active = stage === key;
         return (
           <li
             key={key}
-            className={`flex min-h-11 flex-1 basis-32 items-center gap-2 rounded-sm border px-3 py-2 text-xs tracking-wide ${
+            title={t(STAGE_LABEL[key])}
+            className={`flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-sm border px-2 py-1.5 text-[11px] tracking-wide ${
               active
                 ? "border-[var(--color-amber)] bg-[color-mix(in_srgb,var(--color-amber)_16%,transparent)] text-[var(--color-amber)]"
                 : done
-                  ? "border-[color-mix(in_srgb,var(--color-amber)_35%,transparent)] text-[var(--color-chalk)]"
-                  : "border-[color-mix(in_srgb,var(--color-chalk)_16%,transparent)] text-[var(--color-smoke)]"
+                  ? "border-[color-mix(in_srgb,var(--color-amber)_30%,transparent)] text-[var(--color-chalk)]"
+                  : "border-[color-mix(in_srgb,var(--color-chalk)_14%,transparent)] text-[var(--color-smoke)]"
             }`}
           >
-            <span aria-hidden className="font-brand opacity-80">
+            <span aria-hidden className="font-brand text-[10px] opacity-80">
               {done && !active ? "✓" : String(i + 1).padStart(2, "0")}
             </span>
-            <span className="truncate">{t(STAGE_LABEL[key])}</span>
+            {/* trên phone chỉ hiện số — nhãn màn đã có ở eyebrow, giữ 1 hàng cho gọn */}
+            <span className="hidden truncate sm:inline">{t(STAGE_LABEL[key])}</span>
           </li>
         );
       })}
@@ -138,22 +140,28 @@ export function McqChoices({
   );
 }
 
+/**
+ * Bộ chuyển câu — gộp luôn "nghe câu này" vào nút giữa để bớt một control.
+ * ‹ | ▶ Câu 7/16 | ›
+ */
 export function SentenceStepper({
   index,
   total,
   onPrev,
   onNext,
+  onPlay,
   extra,
 }: {
   index: number;
   total: number;
   onPrev: () => void;
   onNext: () => void;
+  onPlay?: () => void;
   extra?: ReactNode;
 }) {
   const { t } = useI18n();
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex items-center gap-2">
       <button
         type="button"
         onClick={onPrev}
@@ -163,9 +171,25 @@ export function SentenceStepper({
       >
         ‹
       </button>
-      <span className="min-h-11 flex-1 rounded-sm border border-[color-mix(in_srgb,var(--color-chalk)_14%,transparent)] px-3 py-2.5 text-center text-xs tracking-[0.14em] text-[var(--color-smoke)]">
-        {t("loop.nav.sentence", { i: index + 1, n: total })}
-      </span>
+
+      {onPlay ? (
+        <button
+          type="button"
+          onClick={onPlay}
+          className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-sm border border-[color-mix(in_srgb,var(--color-chalk)_20%,transparent)] px-3 py-2.5 text-xs tracking-[0.12em] text-[var(--color-chalk)] transition-colors hover:border-[var(--color-amber)] hover:text-[var(--color-amber)]"
+          title={t("loop.dissect.playSentence")}
+        >
+          <span aria-hidden className="text-[var(--color-amber)]">
+            ▶
+          </span>
+          {t("loop.nav.sentence", { i: index + 1, n: total })}
+        </button>
+      ) : (
+        <span className="min-h-11 flex-1 rounded-sm border border-[color-mix(in_srgb,var(--color-chalk)_14%,transparent)] px-3 py-2.5 text-center text-xs tracking-[0.12em] text-[var(--color-smoke)]">
+          {t("loop.nav.sentence", { i: index + 1, n: total })}
+        </span>
+      )}
+
       <button
         type="button"
         onClick={onNext}
@@ -219,12 +243,10 @@ export function ClusterTranscript({
   sentence,
   activeClusterId,
   onClusterTap,
-  onSentenceTap,
 }: {
   sentence: Sentence;
   activeClusterId?: string | null;
   onClusterTap: (cluster: Cluster) => void;
-  onSentenceTap?: () => void;
 }) {
   const { t } = useI18n();
   const segments = segmentSentence(sentence);
@@ -256,17 +278,8 @@ export function ClusterTranscript({
         )}
       </p>
 
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        {onSentenceTap ? (
-          <button
-            type="button"
-            onClick={onSentenceTap}
-            className="btn-ghost min-h-11 rounded-sm px-4 py-2 text-xs"
-          >
-            ▶ {t("loop.dissect.playSentence")}
-          </button>
-        ) : null}
-        <div className="flex flex-wrap gap-1.5">
+      {sentence.clusters.length > 0 ? (
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {sentence.clusters.map((c) => (
             <span
               key={c.id}
@@ -276,7 +289,7 @@ export function ClusterTranscript({
             </span>
           ))}
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }
