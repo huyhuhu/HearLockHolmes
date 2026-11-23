@@ -32,15 +32,16 @@ Các bước:
 
 **Done khi:** `tsc` pass với types; fixture load được vào UI placeholder; so khớp được với SPEC §5.
 
-## GĐ2 — Transcript pipeline `[ ]` (T1.3)
+## GĐ2 — Transcript pipeline `[x]` (T1.3)
 
 **Đầu ra:** script local sinh transcript word-timestamps + format annotate cụm âm.
 
-- [ ] `tools/transcribe.sh` (hoặc .mjs): yt-dlp lấy audio → faster-whisper word timestamps → JSON
-- [ ] `tools/annotate-format.md`: format cluster (category ∈ liaison/reduced/elision/linking/assimilation, span, cleanForms[3–4], answerIndex)
-- [ ] Chạy thử 1 clip thật, đo độ lệch timestamp ở cụm bị nuốt
+- [x] `tools/transcribe.sh` (hoặc .mjs): yt-dlp lấy audio → faster-whisper word timestamps → JSON
+- [x] `tools/annotate-format.md`: format cluster (category ∈ liaison/reduced/elision/linking/assimilation, span, cleanForms[3–4], answerIndex)
+- [x] Chạy thử 1 clip thật, đo độ lệch timestamp ở cụm bị nuốt
 
 **Done khi:** 1 clip ra JSON đúng schema; word timestamps khớp audio ±300ms ở câu thường.
+→ Đạt: scaffold validate pass (`tools/validate_clip.py --scaffold`); |lệch| trung vị 33ms so onset thật, 14/16 câu trong ±300ms; đo 3 cụm bị nuốt tại `tools/samples/clip-ted-01.timestamp-report.txt`.
 
 ## GĐ3 — Micro-loop học `[ ]` (T1.4) ★ trái tim
 

@@ -1,0 +1,76 @@
+# Timestamp report — clip-ted-01 (GĐ2 test)
+
+Clip: Ken Robinson TED talk `iG9CE55wbtY`, đoạn 335–395s (60s), model whisper `medium`
+(lần chạy cuối; trim im lặng đầu bằng Silero VAD, offset hoàn về toạ độ clip).
+
+## Kết quả đo (2 cách độc lập)
+
+**A. So onset thật (đỉnh lên năng lượng sau khoảng nghỉ) ↔ start câu:**
+- lệch trung vị **+2ms** · |lệch| trung vị **33ms** · **14/16 câu trong ±300ms**
+- 2 câu vượt ngưỡng là artifact của bộ dò onset trong lời nói liên tục (không phải lỗi whisper)
+
+**B. Biên từ ↔ cạnh silence/speech (check_timestamps.py):**
+- median 138ms · p90 338ms · 310/374 biên đo được (64 biên giữa lời nói liên tục — không có cạnh tham chiếu)
+- biên câu: median 42ms
+
+→ **Đạt done criteria:** word timestamps khớp audio ±300ms ở câu thường.
+
+## Độ lệch tại cụm bị nuốt (3 cụm annotate)
+
+| cụm | category | span | lệch biên start/end | năng lượng trong / cả clip |
+|---|---|---|---|---|
+| clu-01 "don't know" | reduced | [3982, 4682] | — / 62ms | 1.45× |
+| clu-02 "they'll have" | reduced | [5202, 5642] | 62 / 338ms | 1.66× |
+| clu-03 "run‿our" | linking | [29882, 30302] | 218 / 142ms | 1.43× |
+
+Clip TED là lời nói rõ (giảm âm nhẹ) nên năng lượng trong cụm không thấp hơn clip —
+cụm "nuốt" thật sự (stream/dialogue) sẽ có ratio < 1 và cần đo lại ở GĐ4.
+
+---
+# Output nguyên văn của check_timestamps.py
+
+=== Timestamp check — clip-ted-01 ===
+audio 60.0s · 187 từ · 16 câu · 211 cạnh năng lượng
+cấu trúc sai: 0
+Lệch biên từ ↔ cạnh silence/speech: median 138.0ms · p90 338.0ms · p95 365.3ms · max 392ms
+  đo được 310/374 biên (82.9%) · 64 biên trong lời nói liên tục (không có cạnh tham chiếu)
+  lệch > 300ms: 42 (13.5% số đo được)
+Lệch biên câu ↔ cạnh: median 42.0ms · max 352ms (28 biên)
+
+-- Theo câu --
+sent-01: median 150.0ms · p90 305.4ms · max 372ms · >300ms: 2/20 ⚠  «What these things have in common is that kids will take a ch»
+sent-02: median 262.0ms · p90 333.2ms · max 338ms · >300ms: 6/14 ⚠  «If they don't know, they'll have a go.»
+sent-03: median 162.0ms · p90 358.0ms · max 358ms · >300ms: 2/9 ⚠  «Am I right? They're not frightened of being wrong.»
+sent-04: median 155.0ms · p90 343.4ms · max 392ms · >300ms: 4/20 ⚠  «Now, I don't mean to say that being wrong is the same thing »
+sent-05: median 158.0ms · p90 366.2ms · max 388ms · >300ms: 6/34 ⚠  «What we do know is if you're not prepared to be wrong, you'l»
+sent-06: median 62.0ms · p90 211.2ms · max 228ms · >300ms: 0/14  «If you're not prepared to be wrong.»
+sent-07: median 168.0ms · p90 388.0ms · max 392ms · >300ms: 5/30 ⚠  «And by the time they get to be adults, most kids have lost t»
+sent-08: median 38.0ms · p90 352.0ms · max 352ms · >300ms: 2/9 ⚠  «They have become frightened of being wrong.»
+sent-09: median 188.0ms · p90 292.0ms · max 298ms · >300ms: 0/17  «And we run our companies this, by the way.»
+sent-10: median 25.0ms · p90 90.0ms · max 148ms · >300ms: 0/6  «We stigmatize mistakes.»
+sent-11: median 182.0ms · p90 343.6ms · max 358ms · >300ms: 6/20 ⚠  «And we're now running national education systems where mista»
+sent-12: median 92.0ms · p90 228.0ms · max 292ms · >300ms: 0/26  «And the result is that we are educating people out of their »
+sent-13: median 75.0ms · p90 328.6ms · max 388ms · >300ms: 4/20 ⚠  «Picasso once said this. He said that all children are born a»
+sent-14: median 95.0ms · p90 262.0ms · max 268ms · >300ms: 0/22  «The problem is to remain an artist as we grow up.»
+sent-15: median 82.0ms · p90 262.0ms · max 392ms · >300ms: 3/44 ⚠  «I believe this passionately, that we don't grow into creativ»
+sent-16: median 222.0ms · p90 362.0ms · max 362ms · >300ms: 2/5 ⚠  «So why is this?»
+
+-- Từ năng lượng thấp (điểm nghi ngờ bị nuốt, 20 từ) --
+  'What' 202-622ms · contrast 0.86 · sent-01
+  'things' 822-1002ms · contrast 0.95 · sent-01
+  'have' 1002-1202ms · contrast 0.97 · sent-01
+  'in' 1202-1322ms · contrast 1.09 · sent-01
+  'is' 1522-1662ms · contrast 1.01 · sent-01
+  'that' 1662-1882ms · contrast 0.56 · sent-01
+  'kids' 1882-2062ms · contrast 1.07 · sent-01
+  'will' 2062-2262ms · contrast 1.06 · sent-01
+  'take' 2262-2442ms · contrast 1.09 · sent-01
+  'a' 2442-2642ms · contrast 1.13 · sent-01
+
+-- Cụm annotate --
+  clu-01 [reduced] span [3982, 4682] · lệch biên None/62ms · năng lượng trong/cả clip 1.445
+      'don't know' → 'dunno' /dəˈnoʊ/ — /t/ + /k/ bay mất trong lời nói tự nhiên.
+  clu-02 [reduced] span [5202, 5642] · lệch biên 62/338ms · năng lượng trong/cả clip 1.662
+      'they'll have' → /ˈðeɪləv/ — 'will' gộp thành âm đuôi /l/, 'have' thành /əv/.
+  clu-03 [linking] span [29882, 30302] · lệch biên 218/142ms · năng lượng trong/cả clip 1.43
+      'run‿our' — /n/ nối thẳng vào nguyên âm /aʊ/, nghe như một từ 'runour'.

@@ -1,0 +1,1184 @@
+{
+  "id": "clip-ted-01",
+  "caseId": "case-test-ted",
+  "videoId": "iG9CE55wbtY",
+  "youtubeUrl": "https://www.youtube.com/watch?v=iG9CE55wbtY&t=335s",
+  "startOffsetMs": 335000,
+  "title": "Ken Robinson — being wrong & creativity",
+  "durationSec": 60.0,
+  "level": 2,
+  "category": "series",
+  "gistQuestion": {
+    "prompt": "Người nói đang nói về điều gì trong đoạn này?",
+    "choices": [
+      "Khả năng sáng tạo và sai lầm của trẻ em",
+      "Giá vé xem kịch",
+      "Cách tuyển nhân viên công ty",
+      "Lịch sử hội họa Picasso"
+    ],
+    "answerIndex": 0
+  },
+  "comprehension": [
+    {
+      "prompt": "Theo người nói, trẻ em có điểm chung gì?",
+      "choices": [
+        "Sẵn sàng thử và không sợ sai",
+        "Chỉ thích môn toán",
+        "Sợ bị điểm kém",
+        "Không thích sáng tạo"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Điều gì xảy ra khi trẻ lớn lên?",
+      "choices": [
+        "Mất dần khả năng dám thử",
+        "Trở nên sáng tạo hơn",
+        "Đi học nghệ thuật",
+        "Chuyển trường mới"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Công ty và trường học đang làm gì với sai lầm?",
+      "choices": [
+        "Gán nhãn xấu cho sai lầm",
+        "Khen thưởng sai lầm",
+        "Bỏ qua hoàn toàn",
+        "Tổ chức thi sai lầm"
+      ],
+      "answerIndex": 0
+    }
+  ],
+  "sentences": [
+    {
+      "id": "sent-01",
+      "text": "What these things have in common is that kids will take a chance.",
+      "startMs": 202,
+      "endMs": 3102,
+      "words": [
+        {
+          "w": "What",
+          "s": 202,
+          "e": 622
+        },
+        {
+          "w": "these",
+          "s": 622,
+          "e": 822
+        },
+        {
+          "w": "things",
+          "s": 822,
+          "e": 1002
+        },
+        {
+          "w": "have",
+          "s": 1002,
+          "e": 1202
+        },
+        {
+          "w": "in",
+          "s": 1202,
+          "e": 1322
+        },
+        {
+          "w": "common",
+          "s": 1322,
+          "e": 1522
+        },
+        {
+          "w": "is",
+          "s": 1522,
+          "e": 1662
+        },
+        {
+          "w": "that",
+          "s": 1662,
+          "e": 1882
+        },
+        {
+          "w": "kids",
+          "s": 1882,
+          "e": 2062
+        },
+        {
+          "w": "will",
+          "s": 2062,
+          "e": 2262
+        },
+        {
+          "w": "take",
+          "s": 2262,
+          "e": 2442
+        },
+        {
+          "w": "a",
+          "s": 2442,
+          "e": 2642
+        },
+        {
+          "w": "chance.",
+          "s": 2642,
+          "e": 3102
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-02",
+      "text": "If they don't know, they'll have a go.",
+      "startMs": 3642,
+      "endMs": 6042,
+      "words": [
+        {
+          "w": "If",
+          "s": 3642,
+          "e": 3802
+        },
+        {
+          "w": "they",
+          "s": 3802,
+          "e": 3982
+        },
+        {
+          "w": "don't",
+          "s": 3982,
+          "e": 4302
+        },
+        {
+          "w": "know,",
+          "s": 4302,
+          "e": 4682
+        },
+        {
+          "w": "they'll",
+          "s": 5202,
+          "e": 5462
+        },
+        {
+          "w": "have",
+          "s": 5462,
+          "e": 5642
+        },
+        {
+          "w": "a",
+          "s": 5642,
+          "e": 5782
+        },
+        {
+          "w": "go.",
+          "s": 5782,
+          "e": 6042
+        }
+      ],
+      "clusters": [
+        {
+          "id": "clu-01",
+          "category": "reduced",
+          "span": [
+            3982,
+            4682
+          ],
+          "cleanForms": [
+            "don't know",
+            "didn't know",
+            "doesn't know",
+            "don't now"
+          ],
+          "answerIndex": 0,
+          "note": "'don't know' → 'dunno' /dəˈnoʊ/ — /t/ + /k/ bay mất trong lời nói tự nhiên."
+        },
+        {
+          "id": "clu-02",
+          "category": "reduced",
+          "span": [
+            5202,
+            5642
+          ],
+          "cleanForms": [
+            "they will have",
+            "they would have",
+            "they will be",
+            "there will have"
+          ],
+          "answerIndex": 0,
+          "note": "'they'll have' → /ˈðeɪləv/ — 'will' gộp thành âm đuôi /l/, 'have' thành /əv/."
+        }
+      ]
+    },
+    {
+      "id": "sent-03",
+      "text": "Am I right? They're not frightened of being wrong.",
+      "startMs": 7182,
+      "endMs": 9582,
+      "words": [
+        {
+          "w": "Am",
+          "s": 7182,
+          "e": 7322
+        },
+        {
+          "w": "I",
+          "s": 7322,
+          "e": 7382
+        },
+        {
+          "w": "right?",
+          "s": 7382,
+          "e": 7642
+        },
+        {
+          "w": "They're",
+          "s": 8002,
+          "e": 8162
+        },
+        {
+          "w": "not",
+          "s": 8162,
+          "e": 8442
+        },
+        {
+          "w": "frightened",
+          "s": 8442,
+          "e": 8722
+        },
+        {
+          "w": "of",
+          "s": 8722,
+          "e": 8862
+        },
+        {
+          "w": "being",
+          "s": 8862,
+          "e": 9142
+        },
+        {
+          "w": "wrong.",
+          "s": 9142,
+          "e": 9582
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-04",
+      "text": "Now, I don't mean to say that being wrong is the same thing as being creative.",
+      "startMs": 10662,
+      "endMs": 13822,
+      "words": [
+        {
+          "w": "Now,",
+          "s": 10662,
+          "e": 10962
+        },
+        {
+          "w": "I",
+          "s": 11002,
+          "e": 11162
+        },
+        {
+          "w": "don't",
+          "s": 11162,
+          "e": 11282
+        },
+        {
+          "w": "mean",
+          "s": 11282,
+          "e": 11402
+        },
+        {
+          "w": "to",
+          "s": 11402,
+          "e": 11502
+        },
+        {
+          "w": "say",
+          "s": 11502,
+          "e": 11662
+        },
+        {
+          "w": "that",
+          "s": 11662,
+          "e": 11862
+        },
+        {
+          "w": "being",
+          "s": 11862,
+          "e": 12102
+        },
+        {
+          "w": "wrong",
+          "s": 12102,
+          "e": 12442
+        },
+        {
+          "w": "is",
+          "s": 12442,
+          "e": 12602
+        },
+        {
+          "w": "the",
+          "s": 12602,
+          "e": 12722
+        },
+        {
+          "w": "same",
+          "s": 12722,
+          "e": 12902
+        },
+        {
+          "w": "thing",
+          "s": 12902,
+          "e": 13062
+        },
+        {
+          "w": "as",
+          "s": 13062,
+          "e": 13102
+        },
+        {
+          "w": "being",
+          "s": 13102,
+          "e": 13322
+        },
+        {
+          "w": "creative.",
+          "s": 13322,
+          "e": 13822
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-05",
+      "text": "What we do know is if you're not prepared to be wrong, you'll never come up with anything original.",
+      "startMs": 14642,
+      "endMs": 19282,
+      "words": [
+        {
+          "w": "What",
+          "s": 14642,
+          "e": 14822
+        },
+        {
+          "w": "we",
+          "s": 14822,
+          "e": 15042
+        },
+        {
+          "w": "do",
+          "s": 15042,
+          "e": 15262
+        },
+        {
+          "w": "know",
+          "s": 15262,
+          "e": 15442
+        },
+        {
+          "w": "is",
+          "s": 15442,
+          "e": 15642
+        },
+        {
+          "w": "if",
+          "s": 15642,
+          "e": 15782
+        },
+        {
+          "w": "you're",
+          "s": 15782,
+          "e": 15982
+        },
+        {
+          "w": "not",
+          "s": 15982,
+          "e": 16222
+        },
+        {
+          "w": "prepared",
+          "s": 16222,
+          "e": 16702
+        },
+        {
+          "w": "to",
+          "s": 16702,
+          "e": 16882
+        },
+        {
+          "w": "be",
+          "s": 16882,
+          "e": 17062
+        },
+        {
+          "w": "wrong,",
+          "s": 17062,
+          "e": 17462
+        },
+        {
+          "w": "you'll",
+          "s": 17762,
+          "e": 17982
+        },
+        {
+          "w": "never",
+          "s": 17982,
+          "e": 18142
+        },
+        {
+          "w": "come",
+          "s": 18142,
+          "e": 18342
+        },
+        {
+          "w": "up",
+          "s": 18342,
+          "e": 18442
+        },
+        {
+          "w": "with",
+          "s": 18442,
+          "e": 18642
+        },
+        {
+          "w": "anything",
+          "s": 18642,
+          "e": 18862
+        },
+        {
+          "w": "original.",
+          "s": 18862,
+          "e": 19282
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-06",
+      "text": "If you're not prepared to be wrong.",
+      "startMs": 20202,
+      "endMs": 22222,
+      "words": [
+        {
+          "w": "If",
+          "s": 20202,
+          "e": 20362
+        },
+        {
+          "w": "you're",
+          "s": 20362,
+          "e": 20582
+        },
+        {
+          "w": "not",
+          "s": 20582,
+          "e": 20822
+        },
+        {
+          "w": "prepared",
+          "s": 20822,
+          "e": 21262
+        },
+        {
+          "w": "to",
+          "s": 21262,
+          "e": 21642
+        },
+        {
+          "w": "be",
+          "s": 21642,
+          "e": 21902
+        },
+        {
+          "w": "wrong.",
+          "s": 21902,
+          "e": 22222
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-07",
+      "text": "And by the time they get to be adults, most kids have lost that capacity.",
+      "startMs": 22822,
+      "endMs": 26262,
+      "words": [
+        {
+          "w": "And",
+          "s": 22822,
+          "e": 23162
+        },
+        {
+          "w": "by",
+          "s": 23162,
+          "e": 23422
+        },
+        {
+          "w": "the",
+          "s": 23422,
+          "e": 23582
+        },
+        {
+          "w": "time",
+          "s": 23582,
+          "e": 23702
+        },
+        {
+          "w": "they",
+          "s": 23702,
+          "e": 23822
+        },
+        {
+          "w": "get",
+          "s": 23822,
+          "e": 23922
+        },
+        {
+          "w": "to",
+          "s": 23922,
+          "e": 24042
+        },
+        {
+          "w": "be",
+          "s": 24042,
+          "e": 24242
+        },
+        {
+          "w": "adults,",
+          "s": 24242,
+          "e": 24522
+        },
+        {
+          "w": "most",
+          "s": 24642,
+          "e": 24862
+        },
+        {
+          "w": "kids",
+          "s": 24862,
+          "e": 25082
+        },
+        {
+          "w": "have",
+          "s": 25082,
+          "e": 25322
+        },
+        {
+          "w": "lost",
+          "s": 25322,
+          "e": 25542
+        },
+        {
+          "w": "that",
+          "s": 25542,
+          "e": 25782
+        },
+        {
+          "w": "capacity.",
+          "s": 25782,
+          "e": 26262
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-08",
+      "text": "They have become frightened of being wrong.",
+      "startMs": 27322,
+      "endMs": 29562,
+      "words": [
+        {
+          "w": "They",
+          "s": 27322,
+          "e": 27862
+        },
+        {
+          "w": "have",
+          "s": 27862,
+          "e": 28222
+        },
+        {
+          "w": "become",
+          "s": 28222,
+          "e": 28502
+        },
+        {
+          "w": "frightened",
+          "s": 28502,
+          "e": 28822
+        },
+        {
+          "w": "of",
+          "s": 28822,
+          "e": 28982
+        },
+        {
+          "w": "being",
+          "s": 28982,
+          "e": 29302
+        },
+        {
+          "w": "wrong.",
+          "s": 29302,
+          "e": 29562
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-09",
+      "text": "And we run our companies this, by the way.",
+      "startMs": 29682,
+      "endMs": 31142,
+      "words": [
+        {
+          "w": "And",
+          "s": 29682,
+          "e": 29802
+        },
+        {
+          "w": "we",
+          "s": 29802,
+          "e": 29882
+        },
+        {
+          "w": "run",
+          "s": 29882,
+          "e": 30022
+        },
+        {
+          "w": "our",
+          "s": 30022,
+          "e": 30302
+        },
+        {
+          "w": "companies",
+          "s": 30302,
+          "e": 30562
+        },
+        {
+          "w": "this,",
+          "s": 30562,
+          "e": 30762
+        },
+        {
+          "w": "by",
+          "s": 30762,
+          "e": 30942
+        },
+        {
+          "w": "the",
+          "s": 30942,
+          "e": 31042
+        },
+        {
+          "w": "way.",
+          "s": 31042,
+          "e": 31142
+        }
+      ],
+      "clusters": [
+        {
+          "id": "clu-03",
+          "category": "linking",
+          "span": [
+            29882,
+            30302
+          ],
+          "cleanForms": [
+            "run our companies",
+            "runs our companies",
+            "run out of companies",
+            "running our companies"
+          ],
+          "answerIndex": 0,
+          "note": "'run‿our' — /n/ nối thẳng vào nguyên âm /aʊ/, nghe như một từ 'runour'."
+        }
+      ]
+    },
+    {
+      "id": "sent-10",
+      "text": "We stigmatize mistakes.",
+      "startMs": 31182,
+      "endMs": 32402,
+      "words": [
+        {
+          "w": "We",
+          "s": 31182,
+          "e": 31362
+        },
+        {
+          "w": "stigmatize",
+          "s": 31362,
+          "e": 31902
+        },
+        {
+          "w": "mistakes.",
+          "s": 31902,
+          "e": 32402
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-11",
+      "text": "And we're now running national education systems where mistakes are the worst thing you can make.",
+      "startMs": 33102,
+      "endMs": 37642,
+      "words": [
+        {
+          "w": "And",
+          "s": 33102,
+          "e": 33282
+        },
+        {
+          "w": "we're",
+          "s": 33282,
+          "e": 33422
+        },
+        {
+          "w": "now",
+          "s": 33422,
+          "e": 33722
+        },
+        {
+          "w": "running",
+          "s": 33722,
+          "e": 34002
+        },
+        {
+          "w": "national",
+          "s": 34002,
+          "e": 34402
+        },
+        {
+          "w": "education",
+          "s": 34402,
+          "e": 34882
+        },
+        {
+          "w": "systems",
+          "s": 34882,
+          "e": 35222
+        },
+        {
+          "w": "where",
+          "s": 35222,
+          "e": 35502
+        },
+        {
+          "w": "mistakes",
+          "s": 35502,
+          "e": 36042
+        },
+        {
+          "w": "are",
+          "s": 36042,
+          "e": 36522
+        },
+        {
+          "w": "the",
+          "s": 36522,
+          "e": 36682
+        },
+        {
+          "w": "worst",
+          "s": 36682,
+          "e": 36842
+        },
+        {
+          "w": "thing",
+          "s": 36842,
+          "e": 37002
+        },
+        {
+          "w": "you",
+          "s": 37002,
+          "e": 37082
+        },
+        {
+          "w": "can",
+          "s": 37082,
+          "e": 37302
+        },
+        {
+          "w": "make.",
+          "s": 37302,
+          "e": 37642
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-12",
+      "text": "And the result is that we are educating people out of their creative capacities.",
+      "startMs": 38582,
+      "endMs": 43202,
+      "words": [
+        {
+          "w": "And",
+          "s": 38582,
+          "e": 39102
+        },
+        {
+          "w": "the",
+          "s": 39102,
+          "e": 39442
+        },
+        {
+          "w": "result",
+          "s": 39442,
+          "e": 39702
+        },
+        {
+          "w": "is",
+          "s": 39702,
+          "e": 40062
+        },
+        {
+          "w": "that",
+          "s": 40062,
+          "e": 40242
+        },
+        {
+          "w": "we",
+          "s": 40242,
+          "e": 40422
+        },
+        {
+          "w": "are",
+          "s": 40422,
+          "e": 40802
+        },
+        {
+          "w": "educating",
+          "s": 40802,
+          "e": 41242
+        },
+        {
+          "w": "people",
+          "s": 41242,
+          "e": 41642
+        },
+        {
+          "w": "out",
+          "s": 41642,
+          "e": 41962
+        },
+        {
+          "w": "of",
+          "s": 41962,
+          "e": 42102
+        },
+        {
+          "w": "their",
+          "s": 42102,
+          "e": 42322
+        },
+        {
+          "w": "creative",
+          "s": 42322,
+          "e": 42622
+        },
+        {
+          "w": "capacities.",
+          "s": 42622,
+          "e": 43202
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-13",
+      "text": "Picasso once said this. He said that all children are born artists.",
+      "startMs": 44142,
+      "endMs": 47602,
+      "words": [
+        {
+          "w": "Picasso",
+          "s": 44142,
+          "e": 44442
+        },
+        {
+          "w": "once",
+          "s": 44442,
+          "e": 44722
+        },
+        {
+          "w": "said",
+          "s": 44722,
+          "e": 44922
+        },
+        {
+          "w": "this.",
+          "s": 44922,
+          "e": 45082
+        },
+        {
+          "w": "He",
+          "s": 45082,
+          "e": 45242
+        },
+        {
+          "w": "said",
+          "s": 45242,
+          "e": 45402
+        },
+        {
+          "w": "that",
+          "s": 45402,
+          "e": 45762
+        },
+        {
+          "w": "all",
+          "s": 45762,
+          "e": 45982
+        },
+        {
+          "w": "children",
+          "s": 45982,
+          "e": 46282
+        },
+        {
+          "w": "are",
+          "s": 46282,
+          "e": 46642
+        },
+        {
+          "w": "born",
+          "s": 46642,
+          "e": 47022
+        },
+        {
+          "w": "artists.",
+          "s": 47022,
+          "e": 47602
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-14",
+      "text": "The problem is to remain an artist as we grow up.",
+      "startMs": 48442,
+      "endMs": 50882,
+      "words": [
+        {
+          "w": "The",
+          "s": 48442,
+          "e": 48602
+        },
+        {
+          "w": "problem",
+          "s": 48602,
+          "e": 48822
+        },
+        {
+          "w": "is",
+          "s": 48822,
+          "e": 49022
+        },
+        {
+          "w": "to",
+          "s": 49022,
+          "e": 49162
+        },
+        {
+          "w": "remain",
+          "s": 49162,
+          "e": 49382
+        },
+        {
+          "w": "an",
+          "s": 49382,
+          "e": 49662
+        },
+        {
+          "w": "artist",
+          "s": 49662,
+          "e": 49862
+        },
+        {
+          "w": "as",
+          "s": 49862,
+          "e": 50202
+        },
+        {
+          "w": "we",
+          "s": 50202,
+          "e": 50402
+        },
+        {
+          "w": "grow",
+          "s": 50402,
+          "e": 50602
+        },
+        {
+          "w": "up.",
+          "s": 50602,
+          "e": 50882
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-15",
+      "text": "I believe this passionately, that we don't grow into creativity, Maybe we grow out of it, or rather we get educated out of it.",
+      "startMs": 51762,
+      "endMs": 58682,
+      "words": [
+        {
+          "w": "I",
+          "s": 51762,
+          "e": 52022
+        },
+        {
+          "w": "believe",
+          "s": 52022,
+          "e": 52182
+        },
+        {
+          "w": "this",
+          "s": 52182,
+          "e": 52442
+        },
+        {
+          "w": "passionately,",
+          "s": 52442,
+          "e": 52782
+        },
+        {
+          "w": "that",
+          "s": 52782,
+          "e": 52942
+        },
+        {
+          "w": "we",
+          "s": 52942,
+          "e": 53042
+        },
+        {
+          "w": "don't",
+          "s": 53042,
+          "e": 53262
+        },
+        {
+          "w": "grow",
+          "s": 53262,
+          "e": 53682
+        },
+        {
+          "w": "into",
+          "s": 53682,
+          "e": 54062
+        },
+        {
+          "w": "creativity,",
+          "s": 54062,
+          "e": 54582
+        },
+        {
+          "w": "Maybe",
+          "s": 54582,
+          "e": 54762
+        },
+        {
+          "w": "we",
+          "s": 54762,
+          "e": 55162
+        },
+        {
+          "w": "grow",
+          "s": 55162,
+          "e": 55502
+        },
+        {
+          "w": "out",
+          "s": 55502,
+          "e": 55782
+        },
+        {
+          "w": "of",
+          "s": 55782,
+          "e": 55902
+        },
+        {
+          "w": "it,",
+          "s": 55902,
+          "e": 56522
+        },
+        {
+          "w": "or",
+          "s": 56862,
+          "e": 57002
+        },
+        {
+          "w": "rather",
+          "s": 57002,
+          "e": 57182
+        },
+        {
+          "w": "we",
+          "s": 57182,
+          "e": 57342
+        },
+        {
+          "w": "get",
+          "s": 57342,
+          "e": 57682
+        },
+        {
+          "w": "educated",
+          "s": 57682,
+          "e": 58062
+        },
+        {
+          "w": "out",
+          "s": 58062,
+          "e": 58282
+        },
+        {
+          "w": "of",
+          "s": 58282,
+          "e": 58362
+        },
+        {
+          "w": "it.",
+          "s": 58362,
+          "e": 58682
+        }
+      ],
+      "clusters": []
+    },
+    {
+      "id": "sent-16",
+      "text": "So why is this?",
+      "startMs": 59422,
+      "endMs": 59962,
+      "words": [
+        {
+          "w": "So",
+          "s": 59422,
+          "e": 59602
+        },
+        {
+          "w": "why",
+          "s": 59602,
+          "e": 59742
+        },
+        {
+          "w": "is",
+          "s": 59742,
+          "e": 59882
+        },
+        {
+          "w": "this?",
+          "s": 59882,
+          "e": 59962
+        }
+      ],
+      "clusters": []
+    }
+  ]
+}
