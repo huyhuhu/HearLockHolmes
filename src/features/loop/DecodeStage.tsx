@@ -6,6 +6,7 @@ import { useI18n } from "../../lib/i18n";
 import type { Clip, Cluster } from "../../types/content";
 import { useClipPlayer } from "../player/ClipPlayer";
 import { progressStore } from "../progress/store";
+import { useGame } from "../game/GameProvider";
 import {
   Eyebrow,
   McqChoices,
@@ -43,6 +44,7 @@ export function DecodeStage({
 }) {
   const { t, lang } = useI18n();
   const { api } = useClipPlayer();
+  const { notify } = useGame();
   const sentence = clip.sentences[sentenceIndex];
   const clipDurationMs = clip.durationSec * 1000;
 
@@ -78,6 +80,7 @@ export function DecodeStage({
         onPlay={() => {
           api.playSpan(sentence.startMs, sentence.endMs, { loop: false });
           progressStore.recordEvent({ type: "replay", clipId: clip.id });
+          notify({ kind: "replay", clipId: clip.id });
         }}
       />
 
@@ -110,6 +113,12 @@ export function DecodeStage({
                     api.playSpan(a, b);
                     progressStore.recordEvent({
                       type: "seek",
+                      clipId: clip.id,
+                      clusterId: cluster.id,
+                      category: cluster.category,
+                    });
+                    notify({
+                      kind: "seek",
                       clipId: clip.id,
                       clusterId: cluster.id,
                       category: cluster.category,

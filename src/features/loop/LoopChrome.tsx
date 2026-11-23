@@ -32,9 +32,9 @@ export function StageRail({ stage }: { stage: Stage }) {
           <li
             key={key}
             title={t(STAGE_LABEL[key])}
-            className={`flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-sm border px-2 py-1.5 text-[11px] tracking-wide ${
+            className={`flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-sm border px-2 py-1.5 text-[11px] tracking-wide transition-all duration-300 ${
               active
-                ? "border-[var(--color-amber)] bg-[color-mix(in_srgb,var(--color-amber)_16%,transparent)] text-[var(--color-amber)]"
+                ? "anim-pop scale-[1.03] border-[var(--color-amber)] bg-[color-mix(in_srgb,var(--color-amber)_16%,transparent)] text-[var(--color-amber)] shadow-[0_0_16px_color-mix(in_srgb,var(--color-amber)_30%,transparent)]"
                 : done
                   ? "border-[color-mix(in_srgb,var(--color-amber)_30%,transparent)] text-[var(--color-chalk)]"
                   : "border-[color-mix(in_srgb,var(--color-chalk)_14%,transparent)] text-[var(--color-smoke)]"

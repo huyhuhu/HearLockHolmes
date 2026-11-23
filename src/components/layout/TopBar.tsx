@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useI18n } from "../../lib/i18n";
 import { useTheme } from "../../lib/theme";
 import { useAuth } from "../../features/auth/AuthProvider";
+import { useGame } from "../../features/game/GameProvider";
 
 function ToggleButton({
   onClick,
@@ -29,6 +30,7 @@ export function TopBar() {
   const { t, lang, toggleLang } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const { user, isFirebaseConfigured, signOutUser } = useAuth();
+  const { level, totalXp, levelProgress, detective, rank } = useGame();
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `inline-flex min-h-11 items-center text-sm font-medium tracking-wide whitespace-nowrap transition-colors ${
@@ -53,7 +55,27 @@ export function TopBar() {
           {t("tagline")}
         </div>
 
-        <nav className="order-last flex w-full items-center gap-5 sm:order-none sm:ml-auto sm:w-auto">
+        {/* chip level/XP — nhịp phản hồi nhanh (GĐ5) */}
+        <Link
+          to="/profile"
+          className="ml-auto hidden min-h-11 items-center gap-2 rounded-sm border border-[color-mix(in_srgb,var(--color-amber)_35%,transparent)] px-3 py-1.5 transition-colors hover:border-[var(--color-amber)] sm:flex"
+          title={t("home.levelChip", { level, xp: totalXp })}
+        >
+          <span className="font-brand text-[11px] tracking-[0.22em] text-[var(--color-amber)]">
+            LV {level}
+          </span>
+          <span className="h-1.5 w-16 overflow-hidden rounded-full bg-[color-mix(in_srgb,var(--color-chalk)_16%,transparent)]">
+            <span
+              className="anim-bar block h-full rounded-full bg-[var(--color-amber)]"
+              style={{ width: `${Math.round(levelProgress * 100)}%` }}
+            />
+          </span>
+          <span className="hidden font-brand text-[10px] tracking-[0.18em] text-[var(--color-smoke)] md:block">
+            {totalXp} XP
+          </span>
+        </Link>
+
+        <nav className="order-last flex w-full items-center gap-5 sm:order-none sm:ml-4 sm:w-auto">
           <NavLink to="/" className={navLinkClass} end>
             <span className="sm:hidden">{t("nav.cases.short")}</span>
             <span className="hidden sm:inline">{t("nav.cases")}</span>
@@ -79,19 +101,23 @@ export function TopBar() {
             {theme === "dark" ? "☾" : "☀"}
           </ToggleButton>
 
+          {detective ? (
+            <span className="hidden max-w-36 truncate text-xs text-[var(--color-amber)] md:block">
+              {detective.name} · {t(`rank.${rank}` as never)}
+            </span>
+          ) : user ? (
+            <span className="hidden max-w-32 truncate text-xs text-[var(--color-smoke)] md:block">
+              {user.displayName ?? user.email ?? t("auth.signedInAs")}
+            </span>
+          ) : null}
           {user ? (
-            <div className="flex items-center gap-2">
-              <span className="hidden max-w-32 truncate text-xs text-[var(--color-smoke)] md:block">
-                {user.displayName ?? user.email ?? t("auth.signedInAs")}
-              </span>
-              <button
-                type="button"
-                onClick={() => void signOutUser()}
-                className="btn-ghost min-h-11 min-w-11 rounded-sm px-3 py-1.5 text-xs"
-              >
-                {t("auth.logout")}
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => void signOutUser()}
+              className="btn-ghost min-h-11 min-w-11 rounded-sm px-3 py-1.5 text-xs"
+            >
+              {t("auth.logout")}
+            </button>
           ) : isFirebaseConfigured ? (
             <Link
               to="/login"
@@ -99,11 +125,11 @@ export function TopBar() {
             >
               {t("auth.login")}
             </Link>
-          ) : (
+          ) : !detective && !user ? (
             <span className="hidden text-xs text-[var(--color-smoke)] lg:block">
               {t("auth.anonymous")}
             </span>
-          )}
+          ) : null}
         </div>
       </div>
     </header>

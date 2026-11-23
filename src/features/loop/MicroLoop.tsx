@@ -9,6 +9,7 @@ import { useMemo, useState } from "react";
 import { useI18n } from "../../lib/i18n";
 import type { Clip, Cluster, Sentence } from "../../types/content";
 import { progressStore } from "../progress/store";
+import { useGame } from "../game/GameProvider";
 import {
   ClipPlayerProvider,
   useClipPlayerController,
@@ -32,6 +33,7 @@ function nextClusterIndex(sentences: Sentence[], from: number): number {
 
 export function MicroLoop({ clip }: { clip: Clip }) {
   const { t } = useI18n();
+  const { notify } = useGame();
   const clipDurationMs = Math.round(clip.durationSec * 1000);
 
   const controller = useClipPlayerController({
@@ -62,11 +64,17 @@ export function MicroLoop({ clip }: { clip: Clip }) {
     setGistRevealed(true);
     const hit = choice === clip.gistQuestion.answerIndex;
     if (hit) progressStore.upsertProgress(clip.id, { gistPassed: true });
+    notify({
+      kind: hit ? "gist_pass" : "gist_miss",
+      clipId: clip.id,
+      firstTry: hit,
+    });
   };
 
   const answerCluster = (cluster: Cluster, choice: number) => {
     const prev = answers[cluster.id];
     const correct = choice === cluster.answerIndex;
+    const firstTry = (prev?.attempts ?? 0) === 0;
     setAnswers((current) => ({
       ...current,
       [cluster.id]: {
@@ -86,6 +94,12 @@ export function MicroLoop({ clip }: { clip: Clip }) {
         decodedClusters: [cluster.id],
       });
     }
+    notify({
+      kind: correct ? "decode_hit" : "decode_miss",
+      clipId: clip.id,
+      clusterId: cluster.id,
+      firstTry: correct && firstTry,
+    });
   };
 
   const answerComprehension = (index: number, choice: number) => {
@@ -95,9 +109,11 @@ export function MicroLoop({ clip }: { clip: Clip }) {
     const hits = clip.comprehension.filter(
       (q, i) => answered[i] === q.answerIndex,
     ).length;
+    const score = total > 0 ? hits / total : 0;
     progressStore.upsertProgress(clip.id, {
-      comprehensionScore: total > 0 ? hits / total : 0,
+      comprehensionScore: score,
     });
+    notify({ kind: "comprehension_scored", clipId: clip.id, value: score });
   };
 
   const toggleFuzzy = (sentenceId: string) => {
@@ -105,6 +121,7 @@ export function MicroLoop({ clip }: { clip: Clip }) {
     setFuzzy((current) => ({ ...current, [sentenceId]: next }));
     if (next) {
       progressStore.recordEvent({ type: "self_fuzzy", clipId: clip.id });
+      notify({ kind: "self_fuzzy", clipId: clip.id });
     }
   };
 
@@ -119,6 +136,7 @@ export function MicroLoop({ clip }: { clip: Clip }) {
         attempts: answer?.attempts ?? 0,
         correct: answer?.correct ?? false,
       });
+      notify({ kind: "clue_filed", clipId: clip.id, clusterId: cluster.id });
     });
     setFiledClusterIds((current) => [
       ...new Set([...current, ...clusters.map((c) => c.id)]),
@@ -131,6 +149,7 @@ export function MicroLoop({ clip }: { clip: Clip }) {
       completedAt: Date.now(),
       listens: current.listens + 1,
     });
+    notify({ kind: "clip_completed", clipId: clip.id });
     setStage("done");
   };
 

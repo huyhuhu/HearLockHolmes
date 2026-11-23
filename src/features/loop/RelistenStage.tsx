@@ -6,6 +6,7 @@ import { useI18n } from "../../lib/i18n";
 import type { Clip, Cluster } from "../../types/content";
 import { useClipPlayer } from "../player/ClipPlayer";
 import { progressStore } from "../progress/store";
+import { useGame } from "../game/GameProvider";
 import {
   ClusterTranscript,
   Eyebrow,
@@ -39,6 +40,7 @@ export function RelistenStage({
 }) {
   const { t, lang } = useI18n();
   const { api } = useClipPlayer();
+  const { notify } = useGame();
   const sentence = clip.sentences[sentenceIndex];
 
   if (!sentence) return null;
@@ -65,6 +67,7 @@ export function RelistenStage({
         onPlay={() => {
           api.playSpan(sentence.startMs, sentence.endMs, { loop: false });
           progressStore.recordEvent({ type: "replay", clipId: clip.id });
+          notify({ kind: "replay", clipId: clip.id });
         }}
       />
 
@@ -78,6 +81,12 @@ export function RelistenStage({
             api.playSpan(start, Math.max(start + 200, end));
             progressStore.recordEvent({
               type: "seek",
+              clipId: clip.id,
+              clusterId: cluster.id,
+              category: cluster.category,
+            });
+            notify({
+              kind: "seek",
               clipId: clip.id,
               clusterId: cluster.id,
               category: cluster.category,
