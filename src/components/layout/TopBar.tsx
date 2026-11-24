@@ -6,6 +6,7 @@ import { useAuth } from "../../features/auth/AuthProvider";
 import { useGame } from "../../features/game/GameProvider";
 import { useSync } from "../../features/sync/SyncProvider";
 import type { SyncStatus } from "../../features/sync/syncEngine";
+import { BrandMark } from "../svg/BrandMark";
 
 const SYNC_LABEL: Record<Exclude<SyncStatus, "idle">, string> = {
   synced: "sync.synced",
@@ -60,13 +61,19 @@ export function TopBar() {
   return (
     <header className="sticky top-0 z-50 border-b border-[color-mix(in_srgb,var(--color-chalk)_12%,transparent)] bg-[color-mix(in_srgb,var(--color-ink)_88%,transparent)] backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-        <Link to="/" className="group inline-flex min-h-11 shrink-0 flex-col justify-center">
-          <div className="neon-text neon-flicker font-brand text-lg leading-none tracking-widest">
-            HEARLOCK
-          </div>
-          <div className="font-brand text-[10px] leading-none tracking-[0.35em] text-[var(--color-smoke)] group-hover:text-[var(--color-amber)]">
-            HOLMES
-          </div>
+        <Link
+          to="/"
+          className="group inline-flex min-h-11 shrink-0 items-center gap-2.5"
+        >
+          <BrandMark className="h-9 w-9 shrink-0" />
+          <span className="flex flex-col justify-center">
+            <span className="neon-text neon-flicker font-brand text-lg leading-none tracking-widest">
+              HEARLOCK
+            </span>
+            <span className="font-brand text-[10px] leading-none tracking-[0.35em] text-[var(--color-smoke)] group-hover:text-[var(--color-amber)]">
+              HOLMES
+            </span>
+          </span>
         </Link>
 
         <div className="hidden text-[10px] uppercase tracking-[0.25em] text-[var(--color-smoke)] lg:block">
