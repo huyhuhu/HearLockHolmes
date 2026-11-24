@@ -14,12 +14,12 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+# Tách build/deploy thành 2 job theo mẫu starter GitHub Pages: job deploy chỉ chạy
+# sau khi build upload artifact xong → artifact đã kịp hiện trong metadata service,
+# hết lỗi "Found 0 artifact(s)" của combo upload-pages-artifact@v3 + deploy-pages@v4.
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -48,9 +48,16 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
