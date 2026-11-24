@@ -129,7 +129,7 @@ daily/2026-11-24); **2 browser context cách ly cùng tài khoản thấy tiến
 không reload; A giải mã 2 cụm + hiểu nghĩa 100% + ghi 2 manh mối + đóng hồ sơ → B nhận đủ
 (159 XP · 6 thành tựu · clues clu-01/02 · comprehensionScore 1 · completedAt). Rules owner-only:
 không xác thực đọc `users/{uid}` → 403; owner → 200. Golden path + responsive QA: 20 screenshot
-`output/qa-gd7/` (1280: login + chip "Đã đồng bộ", case board, daily, nghe mù không lộ transcript,
+(từng lưu `output/qa-gd7/`, đã dọn khỏi repo — xem git commit `67c66ff`; 1280: login + chip "Đã đồng bộ", case board, daily, nghe mù không lộ transcript,
 mổ xẻ, giải mã, modal LÊN CẤP LV 2, ghi sổ tay, đóng hồ sơ, hồ sơ năng lực; 375/768: home · daily ·
 clip · profile · exam · login) — overflow ngang = 0px mọi trang; console app 0 lỗi. **Production
 (24/11/2026):** Firestore bật qua Console — region `asia-northeast1` (Tokyo); rules publish qua tab

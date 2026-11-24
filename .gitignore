@@ -6,6 +6,9 @@ dist
 .DS_Store
 .playwright-cli
 
+# QA screenshots / test artifacts
+output
+
 # tools (GĐ2 pipeline)
 tools/.venv
 tools/out

@@ -75,8 +75,9 @@ Chưa đăng nhập vẫn học được bình thường ở chế độ **Khác
 ## Kiểm thử / QA
 
 - **E2E emulator** (đăng nhập giả lập → gộp Guest → đẩy/lấy Firestore → 2 thiết bị thấy tiến độ
-  của nhau) + **golden path** + **responsive 375/768/1280px**: bằng chứng screenshot tại
-  [`output/qa-gd7/`](output/qa-gd7/) — chi tiết trong [`doc/DEV-PLAN.md`](doc/DEV-PLAN.md) GĐ7.
+  của nhau) + **golden path** + **responsive 375/768/1280px**: 20 screenshot bằng chứng đã QA
+  (không commit vào repo — xem lại trong git history commit `67c66ff`) — chi tiết trong
+  [`doc/DEV-PLAN.md`](doc/DEV-PLAN.md) GĐ7.
 - Nạp clip/case mới: theo [`doc/CONTENT-SOP.md`](doc/CONTENT-SOP.md);
   `tools/validate_clip.py` là cổng chất lượng.
 
