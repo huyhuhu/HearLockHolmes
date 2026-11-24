@@ -47,6 +47,8 @@ export type LearnEventType =
 
 /** users/{uid}/events/{id} — nhiên liệu cho hồ sơ năng lực */
 export interface LearnEvent {
+  /** Định danh ổn định cho đồng bộ (sinh lúc ghi) — chống trùng đa thiết bị */
+  id?: string;
   type: LearnEventType;
   clipId: string;
   clusterId?: string;

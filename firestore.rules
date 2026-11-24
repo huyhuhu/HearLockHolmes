@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Firestore security rules — theo doc/SPEC.md §5.
+// • Content hệ thống (cases/clips): public read, admin write.
+// • Dữ liệu người dùng (users/{uid}/...): chủ sở hữu đọc/ghi, người khác không.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // —— Content hệ thống: ai cũng đọc được, không ghi từ client ——
+    match /cases/{caseId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /clips/{clipId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // —— Dữ liệu người dùng: owner-only ——
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+
+      // Mọi subcollection (events, clues, progress, xpGrants, achievements,
+      // daily, exams) đều thuộc sở hữu của chính uid đó.
+      match /{subcollection}/{docId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+    }
+  }
+}

@@ -6,7 +6,9 @@
  *   clues   → users/{uid}/clues/{clueId}
  *   progress→ users/{uid}/progress/{clipId}
  *
- * Khi có Firebase, thay các hàm này bằng Firestore mà không đổi người gọi.
+ * Khi có Firebase, sync engine (`src/features/sync/`) đẩy các bản ghi này
+ * lên Firestore và kéo thay đổi từ thiết bị khác về — API người gọi giữ nguyên.
+ * Key localStorage gắn theo tài khoản (scopedKey) để đa tài khoản không dính nhau.
  */
 import type { SoundCategory } from "../../types/content";
 import type {
@@ -15,6 +17,8 @@ import type {
   LearnEvent,
   LearnEventType,
 } from "../../types/user";
+import { notifyStoreChange } from "../../lib/storeEvents";
+import { scopedKey } from "../../lib/sync/storageScope";
 
 const STORAGE_KEY = "hearlock.local.v1";
 const MAX_EVENTS = 400;
@@ -25,12 +29,15 @@ export type LocalSnapshot = {
   progress: Record<string, ClipProgress>;
 };
 
-const EMPTY: LocalSnapshot = { events: [], clues: [], progress: {} };
+export function emptyProgressSnapshot(): LocalSnapshot {
+  return { events: [], clues: [], progress: {} };
+}
 
-function read(): LocalSnapshot {
+/** Đọc snapshot tại một key tường minh (dùng cho migration/sync engine). */
+export function readProgressAt(key: string): LocalSnapshot {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ...EMPTY, events: [], clues: [], progress: {} };
+    const raw = localStorage.getItem(key);
+    if (!raw) return emptyProgressSnapshot();
     const parsed = JSON.parse(raw) as Partial<LocalSnapshot>;
     return {
       events: Array.isArray(parsed.events) ? parsed.events : [],
@@ -38,16 +45,30 @@ function read(): LocalSnapshot {
       progress: parsed.progress && typeof parsed.progress === "object" ? parsed.progress : {},
     };
   } catch {
-    return { events: [], clues: [], progress: {} };
+    return emptyProgressSnapshot();
   }
 }
 
-function write(next: LocalSnapshot): void {
+/** Ghi snapshot tại một key tường minh (không phát sự kiện). */
+export function writeProgressAt(key: string, snap: LocalSnapshot): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    localStorage.setItem(key, JSON.stringify(snap));
   } catch {
     /* hết dung lượng — bỏ qua, không chặn việc học */
   }
+}
+
+export function progressKey(): string {
+  return scopedKey(STORAGE_KEY);
+}
+
+function read(): LocalSnapshot {
+  return readProgressAt(progressKey());
+}
+
+function write(next: LocalSnapshot): void {
+  writeProgressAt(progressKey(), next);
+  notifyStoreChange();
 }
 
 const EMPTY_PROGRESS: ClipProgress = {
@@ -70,10 +91,12 @@ export const progressStore = {
   /** Nhiên liệu cho hồ sơ năng lực (SPEC §3) */
   recordEvent(input: EventInput): void {
     const snap = read();
+    const at = Date.now();
     const event: LearnEvent = {
+      id: `ev-${at}-${Math.random().toString(36).slice(2, 8)}`,
       type: input.type,
       clipId: input.clipId,
-      at: Date.now(),
+      at,
       ...(input.clusterId ? { clusterId: input.clusterId } : {}),
       ...(input.category ? { category: input.category } : {}),
       ...(input.categories && input.categories.length > 0
@@ -128,5 +151,15 @@ export const progressStore = {
     };
     write({ ...snap, progress: { ...snap.progress, [clipId]: merged } });
     return merged;
+  },
+
+  /** Toàn bộ snapshot hiện tại (cho sync engine) */
+  getSnapshot(): LocalSnapshot {
+    return read();
+  },
+
+  /** Ghi đè snapshot đã hợp nhất từ remote — phát sự kiện để UI refresh */
+  applySnapshot(snap: LocalSnapshot): void {
+    write(snap);
   },
 };

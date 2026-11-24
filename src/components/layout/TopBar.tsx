@@ -4,6 +4,22 @@ import { useI18n } from "../../lib/i18n";
 import { useTheme } from "../../lib/theme";
 import { useAuth } from "../../features/auth/AuthProvider";
 import { useGame } from "../../features/game/GameProvider";
+import { useSync } from "../../features/sync/SyncProvider";
+import type { SyncStatus } from "../../features/sync/syncEngine";
+
+const SYNC_LABEL: Record<Exclude<SyncStatus, "idle">, string> = {
+  synced: "sync.synced",
+  syncing: "sync.syncing",
+  offline: "sync.offline",
+  error: "sync.error",
+};
+
+const SYNC_GLYPH: Record<Exclude<SyncStatus, "idle">, string> = {
+  synced: "●",
+  syncing: "◐",
+  offline: "○",
+  error: "▲",
+};
 
 function ToggleButton({
   onClick,
@@ -31,6 +47,8 @@ export function TopBar() {
   const { theme, toggleTheme } = useTheme();
   const { user, isFirebaseConfigured, signOutUser } = useAuth();
   const { level, totalXp, levelProgress, detective, rank } = useGame();
+  const { status: syncStatus } = useSync();
+  const syncKey = syncStatus as Exclude<SyncStatus, "idle">;
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `inline-flex min-h-11 items-center text-sm font-medium tracking-wide whitespace-nowrap transition-colors ${
@@ -108,6 +126,17 @@ export function TopBar() {
           ) : user ? (
             <span className="hidden max-w-32 truncate text-xs text-[var(--color-smoke)] md:block">
               {user.displayName ?? user.email ?? t("auth.signedInAs")}
+            </span>
+          ) : null}
+          {user && syncStatus !== "idle" ? (
+            <span
+              title={t(SYNC_LABEL[syncKey] as never)}
+              className="flex items-center gap-1.5 rounded-sm border border-[color-mix(in_srgb,var(--color-chalk)_18%,transparent)] px-2 py-1.5 text-[10px] tracking-[0.18em] text-[var(--color-smoke)]"
+            >
+              <span aria-hidden>{SYNC_GLYPH[syncKey]}</span>
+              <span className="hidden lg:inline">
+                {t(SYNC_LABEL[syncKey] as never)}
+              </span>
             </span>
           ) : null}
           {user ? (

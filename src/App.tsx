@@ -8,6 +8,7 @@ import {
 import { I18nProvider } from "./lib/i18n";
 import { ThemeProvider } from "./lib/theme";
 import { AuthProvider } from "./features/auth/AuthProvider";
+import { SyncProvider } from "./features/sync/SyncProvider";
 import { GameProvider } from "./features/game/GameProvider";
 import { ToastHost } from "./features/game/ToastHost";
 import { Companion } from "./features/game/Companion";
@@ -44,16 +45,18 @@ export default function App() {
     <ThemeProvider>
       <I18nProvider>
         <AuthProvider>
-          <GameProvider cases={seedCases} clips={seedClips}>
-            <BrowserRouter basename={import.meta.env.BASE_URL}>
-              <div className="relative z-10 min-h-screen">
-                <TopBar />
-                <AnimatedRoutes />
-                <ToastHost />
-                <Companion />
-              </div>
-            </BrowserRouter>
-          </GameProvider>
+          <SyncProvider>
+            <GameProvider cases={seedCases} clips={seedClips}>
+              <BrowserRouter basename={import.meta.env.BASE_URL}>
+                <div className="relative z-10 min-h-screen">
+                  <TopBar />
+                  <AnimatedRoutes />
+                  <ToastHost />
+                  <Companion />
+                </div>
+              </BrowserRouter>
+            </GameProvider>
+          </SyncProvider>
         </AuthProvider>
       </I18nProvider>
     </ThemeProvider>

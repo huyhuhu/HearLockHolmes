@@ -16,6 +16,7 @@ export function LoginPage() {
         {t("login.title")}
       </h1>
       <p className="mt-4 text-[var(--color-smoke)]">{t("login.sub")}</p>
+      <p className="mt-2 text-xs text-[var(--color-smoke)]">{t("sync.sub")}</p>
 
       <div className="mt-10 w-full">
         {!isFirebaseConfigured ? (

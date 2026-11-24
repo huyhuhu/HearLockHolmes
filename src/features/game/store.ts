@@ -20,6 +20,8 @@ import type {
   XpSource,
 } from "../../types/game";
 import { missionsForDate, todayKey } from "./daily";
+import { notifyStoreChange } from "../../lib/storeEvents";
+import { scopedKey } from "../../lib/sync/storageScope";
 
 const STORAGE_KEY = "hearlock.game.v1";
 
@@ -29,27 +31,22 @@ const EMPTY_COUNTERS: GameCounters = {
   casesCracked: [],
 };
 
-const EMPTY: GameSnapshot = {
-  detective: null,
-  xpGrants: [],
-  achievements: [],
-  daily: {},
-  exams: {},
-  counters: { ...EMPTY_COUNTERS, casesCracked: [] },
-};
+export function emptyGameSnapshot(): GameSnapshot {
+  return {
+    detective: null,
+    xpGrants: [],
+    achievements: [],
+    daily: {},
+    exams: {},
+    counters: { ...EMPTY_COUNTERS, casesCracked: [] },
+  };
+}
 
-function read(): GameSnapshot {
+/** Đọc snapshot tại một key tường minh (dùng cho migration/sync engine). */
+export function readGameAt(key: string): GameSnapshot {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw)
-      return {
-        ...EMPTY,
-        xpGrants: [],
-        achievements: [],
-        daily: {},
-        exams: {},
-        counters: { ...EMPTY_COUNTERS, casesCracked: [] },
-      };
+    const raw = localStorage.getItem(key);
+    if (!raw) return emptyGameSnapshot();
     const p = JSON.parse(raw) as Partial<GameSnapshot>;
     return {
       detective: p.detective ?? null,
@@ -66,28 +63,40 @@ function read(): GameSnapshot {
       },
     };
   } catch {
-    return {
-      ...EMPTY,
-      xpGrants: [],
-      achievements: [],
-      daily: {},
-      exams: {},
-      counters: { ...EMPTY_COUNTERS, casesCracked: [] },
-    };
+    return emptyGameSnapshot();
   }
 }
 
-function write(next: GameSnapshot): void {
+/** Ghi snapshot tại một key tường minh (không phát sự kiện). */
+export function writeGameAt(key: string, snap: GameSnapshot): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    localStorage.setItem(key, JSON.stringify(snap));
   } catch {
     /* hết dung lượng — không chặn việc học */
   }
 }
 
+export function gameKey(): string {
+  return scopedKey(STORAGE_KEY);
+}
+
+function read(): GameSnapshot {
+  return readGameAt(gameKey());
+}
+
+function write(next: GameSnapshot): void {
+  writeGameAt(gameKey(), next);
+  notifyStoreChange();
+}
+
 export const gameStore = {
   getSnapshot(): GameSnapshot {
     return read();
+  },
+
+  /** Ghi đè snapshot đã hợp nhất từ remote — phát sự kiện để UI refresh */
+  applySnapshot(snap: GameSnapshot): void {
+    write(snap);
   },
 
   saveDetective(d: DetectiveDoc): void {

@@ -24,6 +24,7 @@ import type {
   GameSnapshot,
 } from "../../types/game";
 import { progressStore } from "../progress/store";
+import { subscribeStoreChange } from "../../lib/storeEvents";
 import {
   ACHIEVEMENTS,
   type AchievementDef,
@@ -117,6 +118,11 @@ export function GameProvider({
   useEffect(() => {
     prevLevelRef.current = levelFromXp(gameStore.totalXp()).level;
   }, []);
+
+  // Tự refresh khi kho local thay đổi (ghi mới hoặc hợp nhất từ thiết bị khác).
+  useEffect(() => {
+    return subscribeStoreChange(() => refresh());
+  }, [refresh]);
 
   const pushToast = useCallback((toast: Omit<GameToast, "id">) => {
     const id = uid();
