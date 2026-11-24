@@ -102,6 +102,45 @@ Các bước:
 
 ---
 
+## GĐ7 — Tài khoản + đồng bộ đa thiết bị `[x]` (T1.8)
+
+**Đầu ra:** lưu tiến độ theo tài khoản, sao lưu + đồng bộ real-time đa thiết bị qua Firestore;
+vẫn học được offline & khi chưa đăng nhập (Khách lạ).
+
+- [x] Phân tách localStorage theo tài khoản (`<key>::<uid>`); Khách dùng key gốc, không dính dữ liệu nhau
+- [x] Đăng nhập lần đầu **gộp dữ liệu Khách vào tài khoản** (idempotent, không mất tiến độ) rồi xoá scratchpad Khách
+- [x] Merge CRDT (`src/features/sync/merge.ts`) — giao hoán · kết hợp · lũy đẳng cho mọi nhánh; có property-test
+- [x] Đẩy lên Firestore theo schema SPEC §5: diff-so-mirror chống ghi trùng; doc tranh chấp ghi transaction-merge (cloud không thoái lui), doc append-only ghi theo lô
+- [x] Kéo `getDocs` khi đăng nhập + `onSnapshot` real-time → hợp nhất về local (đa thiết bị)
+- [x] Offline-first: giữ pending trong localStorage, tự đẩy khi có mạng; không chặn việc học
+- [x] `firestore.rules` owner-only `users/{uid}`; content `cases/clips` public-read
+- [x] Chip trạng thái đồng bộ trên TopBar (synced/syncing/offline/error) + ghi chú ở `/login`, song ngữ
+- [x] Store giữ nguyên API người gọi (ghi local trước) — thêm notification hook để UI/ engine tự cập nhật
+
+**Done khi:** `npm run build` pass; đăng nhập → dữ liệu Khách + remote hợp nhất về đúng tài khoản;
+hai thiết bị cùng tài khoản thấy tiến độ của nhau (real-time); offline vẫn học & tự đồng bộ khi có mạng.
+→ **Đã kiểm chứng:** build pass; property-test CRDT (idempotent · giao hoán byte-equal · kết hợp ·
+semantics max/OR/union/LWW/min) pass; code review luồng migration/diff/push/pull. **E2E emulator
+(24/11/2026)** — Firebase Emulator (Auth + Firestore, JRE 21 portable) với `VITE_FIREBASE_EMULATOR=1`
++ Playwright (Firefox): đăng nhập popup giả lập Google → gộp Guest "Ace" (+20 XP) vào tài khoản,
+xoá scratchpad Khách, đẩy Firestore đúng schema §5 (root · achievements/ach-debut · xpGrants ·
+daily/2026-11-24); **2 browser context cách ly cùng tài khoản thấy tiến độ của nhau real-time**
+(onSnapshot): B thấy "Ace" 20 XP từ cloud; B trả lời gist → A tự lên 30→44 XP (daily hoàn thành)
+không reload; A giải mã 2 cụm + hiểu nghĩa 100% + ghi 2 manh mối + đóng hồ sơ → B nhận đủ
+(159 XP · 6 thành tựu · clues clu-01/02 · comprehensionScore 1 · completedAt). Rules owner-only:
+không xác thực đọc `users/{uid}` → 403; owner → 200. Golden path + responsive QA: 20 screenshot
+`output/qa-gd7/` (1280: login + chip "Đã đồng bộ", case board, daily, nghe mù không lộ transcript,
+mổ xẻ, giải mã, modal LÊN CẤP LV 2, ghi sổ tay, đóng hồ sơ, hồ sơ năng lực; 375/768: home · daily ·
+clip · profile · exam · login) — overflow ngang = 0px mọi trang; console app 0 lỗi. **Production
+(24/11/2026):** Firestore bật qua Console — region `asia-northeast1` (Tokyo); rules publish qua tab
+Rules (bản tối giản không comment/`rules_version`, cùng ngữ nghĩa với `firestore.rules` trong repo —
+redeploy bản đầy đủ khi có CLI login). Kiểm chứng từ xa: REST không token → 403 "Missing or
+insufficient permissions" (owner-only đang hiệu lực — khác hẳn lỗi "service" của project không tồn
+tại). **Còn user xác nhận cuối:** đăng nhập 2 thiết bị thật + tài khoản Google thật để xem tiến độ
+tự cập nhật hai chiều (E2E Google OAuth thật không chạy headless được ở đây).
+
+---
+
 ## Ràng buộc xuyên suốt
 
 - **Mobile-first**: user học trên điện thoại + tablet — mỗi GĐ có UI phải kiểm tra viewport 375px/768px trước khi chốt (xem SPEC §4 "Responsive").

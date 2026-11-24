@@ -128,6 +128,27 @@ Toạ độ thời gian: `startMs/endMs`, `words[].s/e`, `span` là **ms tính t
 `startOffsetMs` = vị trí clip trong video gốc (0 nếu clip = cả video). Player YouTube seek tới
 `startOffsetMs + t`. Pipeline (`tools/transcribe.sh`) sinh đúng toạ độ này.
 
+### Đồng bộ & đa thiết bị (GĐ7)
+
+Dữ liệu người dùng là **local-first**: ghi vào localStorage trước (không chặn việc học), lớp
+`src/features/sync/` đẩy lên Firestore khi đã đăng nhập. Key localStorage gắn theo tài khoản
+(`<key>::<uid>`); "Khách lạ" dùng key gốc và được **gộp vào tài khoản** khi đăng nhập lần đầu
+(không mất tiến độ đã học).
+
+- **Merge CRDT** (`src/features/sync/merge.ts`): mọi nhánh hợp nhất theo luật giao hoán · kết
+  hợp · lũy đẳng → hai thiết bị hội tụ, không mất dữ liệu:
+  `listens/score/counter = max` · `gistPassed/claimed = OR` · `decodedClusters/casesCracked =
+  union` · `events/xpGrants/achievements = union theo id/key (idempotent)` · `clues = LWW theo
+  decodedAt` · `completedAt = min` · `daily.done = max`.
+- **Đẩy**: diff so với "mirror" (trạng thái đã đẩy) → chỉ ghi doc thay đổi. Doc tranh chấp
+  (`progress`/`daily`/`exams`/`clues`/root) ghi bằng **transaction merge** để cloud không bao
+  giờ thoái lui; doc append-only (`events`/`xpGrants`/`achievements`) ghi theo lô.
+- **Kéo**: `getDocs` khi đăng nhập + `onSnapshot` real-time → hợp nhất về local.
+- **Offline**: giữ "pending" trong localStorage, tự đẩy lại khi có mạng — không bao giờ chặn học.
+- **Bảo mật**: deploy `firestore.rules` (owner-only `users/{uid}`; `cases/clips` public-read).
+- **QA bằng emulator**: `VITE_FIREBASE_EMULATOR=1` trỏ app vào Firebase Emulator (Auth :9099 +
+  Firestore :8080) — E2E đăng nhập + đồng bộ đa thiết bị không cần tài khoản Google thật.
+
 ## 6. Nội dung — kho tư liệu điều tra
 
 Web **không host video** (bản quyền) — chỉ link YouTube + transcript tương tác. Ưu tiên series đối thoại dày (sitcom, drama, crime) hơn phim hành động; chủ đề "con trai thích": game, tech, phim.
